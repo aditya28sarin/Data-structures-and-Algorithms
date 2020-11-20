@@ -10,4 +10,6 @@ int main() {
     cout << "Hello, World." << endl;
     
     cout<<input_string;
+    
+    cout<<"end";
 }
