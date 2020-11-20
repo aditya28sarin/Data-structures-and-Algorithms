@@ -2,7 +2,7 @@
 
 This repository contains all my C++ practice codes till date. 
 
-#### It contains the following topics:
+## It contains the following topics:
 
 1. 30 Days of Code (Hackerrank)
 2. Data structures and Algorithms (DSA)
