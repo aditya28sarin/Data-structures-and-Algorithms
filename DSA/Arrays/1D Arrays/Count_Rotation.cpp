@@ -1,4 +1,5 @@
-// Given an ascending sorted rotated array Arr of distinct integers of size N. The array is right rotated K times. Find the value of K.
+// Given an ascending sorted rotated array Arr of distinct integers of size N. 
+// The array is right rotated K times. Find the value of K.
 
 // Input:
 // N = 5
@@ -9,6 +10,10 @@
 // We can see that the array was rotated 
 // 1 times to the right.
 
+
+-------------------------------------------------------------------------------------------------------
+						CODE
+-------------------------------------------------------------------------------------------------------
 
 class Solution{
 public:	
