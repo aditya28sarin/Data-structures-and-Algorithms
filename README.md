@@ -12,4 +12,10 @@ This repository contains all my C++ practice codes till date.
 6. Standard Template Library (STL)
 
 
+## The Questions in this repository are compiled from:
+1. Geeks for Geeks
+2. Leetcode
+3. HackerRank
+4. HackerEarth
+
 **The repository would be updated timely.**
