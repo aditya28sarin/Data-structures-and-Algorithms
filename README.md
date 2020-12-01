@@ -1,6 +1,6 @@
 # Cpp-Codes
 
-This repository contains all my C++ practice codes till date. 
+This repository contains all of my C++ practice codes till date. 
 
 ## It contains the following topics
 
