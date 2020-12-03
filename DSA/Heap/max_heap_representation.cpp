@@ -1,4 +1,4 @@
-include<bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
 
@@ -18,17 +18,17 @@ class MaxHeap{
 public:
 	MaxHeap(int heap_capacity);
 	
-	int parentNode(int index){return (i-1)/2;}
+	int parentNode(int index){return (index-1)/2;}
 	
-	int leftNode(int index){return (2*i)+1;}
+	int leftNode(int index){return (2*index)+1;}
 	
-	int rightNode(int index){return (2*i)+2;}
+	int rightNode(int index){return (2*index)+2;}
 	
 	void insertKey(int key);
 
 	void increaseKey(int index, int new_value);
 	
-	void extractMax();
+	int extractMax();
 	
 	void maxHeapify(int index);
 	
@@ -74,7 +74,7 @@ void MaxHeap :: increaseKey(int index, int new_value){
 }
 
 
-int MaxHeap :: extractMax(int index)
+int MaxHeap :: extractMax()
 {
 	if(heap_size<=0)
 	{
@@ -95,12 +95,10 @@ int MaxHeap :: extractMax(int index)
 	return root;
 }
 
-
-
-void MaxHeap::MaxHeapify(int index)
+void MaxHeap::maxHeapify(int index)
 {
-	int left_index=left(index);
-	int right_index=right(index);
+	int left_index=leftNode(index);
+	int right_index=rightNode(index);
 	int largest=index;
 	
 	if(left_index<heap_size && heap_array[left_index]>heap_array[index])
@@ -124,3 +122,21 @@ void MaxHeap::deleteKey(int index){
 	increaseKey(index,INT_MAX);
 	extractMax();
 }
+
+
+int main() 
+{ 
+    MaxHeap h(11); 
+    h.insertKey(3); 
+    h.insertKey(2); 
+    h.deleteKey(1); 
+    h.insertKey(15); 
+    h.insertKey(5); 
+    h.insertKey(4); 
+    h.insertKey(45); 
+    cout << h.extractMax() << " "; 
+    cout << h.getMax() << " "; 
+    h.increaseKey(2, 1); 
+    cout << h.getMax(); 
+    return 0; 
+} 
