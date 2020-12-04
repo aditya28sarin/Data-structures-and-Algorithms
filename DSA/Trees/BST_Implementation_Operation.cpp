@@ -17,7 +17,7 @@ Node* newNode(int item)
     return new_node;
 }
 
-//inorder traversal in BST
+//Inorder traversal in BST
 void inOrder(Node* root)
 {
     if(root==NULL)
@@ -124,64 +124,6 @@ bool isBSTUtil(Node* root,int min, int max)
 /*------------- Functions for chcekcing if BST---------------*/
 
 
-/*------------- Delete Node in BST---------------*/
-Node* minValue(Node* root);
-Node* deleteNode(Node* root, int key)
-{
-    if(root==NULL)
-        return root;
-    
-    else if(key<root->data) 
-        root->left=deleteNode(root->left, key);
-    else if(key>root->data)
-        root->right=deleteNode(root->right, key);
-
-    //we have found the node we wanted to delete
-    else
-    {   //if node to be deleted has no child 
-        if(root->left==NULL && root->right==NULL)
-        {
-            delete root;
-            root=NULL;
-        }
-        //if node to be deleted has 1 child
-        else if(root->left==NULL)
-        {
-            Node* temp=root;
-            root=root->right;
-            delete temp;
-        }
-        else if(root->right==NULL)
-        {
-            Node* temp=root;
-            root=root->left;
-            delete temp;
-        }
-
-        else 
-        {
-            Node* temp = minValue(root->right);
-            root->data = temp->data;
-            root->right=deleteNode(root->right,temp->data);
-        }
-        
-    }
-
-    return root;
-    
-}
-
-Node* minValue(Node* root)
-{
-    if(root==NULL)
-        return root;
-    //we will get min value on left child only hence traversing towards left
-    if(root->data > root->left->data)
-        root=root->left;
-    
-    return root;
-}
-/*------------- Delete Node in BST---------------*/
 
 int main() 
 { 
@@ -205,11 +147,6 @@ int main()
    std::cout<<"\nHeight of BST is: "<<findHeight(root); 
 
   std:: cout<<"\nIs the Binary Tree a BST? "<<checkBST(root);
-
-   root=deleteNode(root,40);
-
-   std::cout<<"\nBST after deletion: ";
-   inOrder(root);
     
     return 0; 
 } 
