@@ -2,87 +2,109 @@
 using namespace std;
 
 
-
-void merge(int arr[], int l, int mid, int r)
+void merge(int input_array[], int left_ptr,int mid_ptr, int right_ptr)
 {
-    int n1=mid+1-l;
-    int n2=r-mid;
+    //we create 2 temp arrays to and then merge it back into the input array
+    int temp_array1_size=mid_ptr-left_ptr+1;
+    int temp_array2_size=right_ptr-mid_ptr;
 
-    int L[n1], R[n2];
+    int temp_array_1[temp_array1_size];
+    int temp_array_2[temp_array2_size];
 
-    for(int i=0;i<n1;i++)
-        L[i]=arr[l+i];
-    
-    for(int i=0;i<n2;i++)
-        R[i]=arr[mid+1+i];
-
-    int i=0,j=0,k=l;
-
-    while(i<n1 && j<n2)
+    for(int i=0;i<temp_array1_size;i++)
     {
-        if(L[i]<=R[j])
+        temp_array_1[i]=input_array[left_ptr+i];
+    }
+
+    for(int i=0;i<temp_array2_size;i++)
+    {
+        temp_array_2[i]=input_array[mid_ptr+1+i];
+    }
+
+
+    // traverse the both temp arrays and compare each element, substitute the smaller
+    // of the two inside the input array 
+    int temp_array1_index=0,temp_array2_index=0,input_array_index=left_ptr;
+
+    while(temp_array1_index<temp_array1_size && temp_array2_index<temp_array2_size)
+    {
+        if(temp_array_1[temp_array1_index]< temp_array_2[temp_array2_index])
         {
-            arr[k]=L[i];
-            i++;
+            input_array[input_array_index]=temp_array_1[temp_array1_index];
+            input_array_index++;
+            temp_array1_index++;
         }
         else
         {
-            arr[k]=R[j];
-            j++;
+            input_array[input_array_index]=temp_array_2[temp_array2_index];
+            input_array_index++;
+            temp_array2_index++;
         }
-        k++;
+          
     }
 
-    while(i<n1)
+    // if one of the the pointers has not reached the end of one of the two temp
+    //arrays then we make sure that it reaches the end and copy the remaining items 
+    //inside the input array 
+    while(temp_array1_index<temp_array1_size)
     {
-        arr[k]=L[i];
-        i++;
-        k++;
+        input_array[input_array_index]=temp_array_1[temp_array1_index];   
+        temp_array1_index++;
+        input_array_index++;
     }
-    
-    while(j<n2)
+
+    while(temp_array2_index<temp_array2_size)
     {
-        arr[k]=R[j];
-        j++;
-        k++;
+        input_array[input_array_index]=temp_array_2[temp_array2_index];
+        temp_array2_index++;
+        input_array_index++;
     }
+
 }
 
-void mergeSort(int arr[], int l, int r)
+
+void mergeSort(int input_array[], int left_ptr, int right_ptr)
 {
-    if(l<r)
-    {
-    int mid=l+(r-l)/2;
+    if(left_ptr<right_ptr){
 
-    mergeSort(arr,l,mid);
+    int mid_ptr=(left_ptr+right_ptr)/2;
 
-    mergeSort(arr,mid+1,r);
-
-    merge(arr,l,mid,r);
+    mergeSort(input_array,left_ptr,mid_ptr);
+    mergeSort(input_array,mid_ptr+1,right_ptr);
+    
+    merge(input_array,left_ptr,mid_ptr,right_ptr);
     }
+       
 }
 
+void printArray(int input_array[], int array_size)
+{
+    for(int i=0;i<array_size;i++)
+    {
+        cout<<input_array[i]<<" ";
+    }
+    cout<<endl;
+}
 
-void printArray(int A[], int size) 
-{ 
-    int i; 
-    for (i = 0; i < size; i++) 
-        printf("%d ", A[i]); 
-    printf("\n"); 
-} 
-  
 /* Driver program to test above functions */
 int main() 
 { 
-    int arr[] = { 12, 11, 13, 5, 6, 7 }; 
-    int arr_size = sizeof(arr) / sizeof(arr[0]); 
+    int array_size;
+    cin>>array_size;
+
+    int input_array[array_size];
+
+    for(int i=0;i<array_size;i++)
+    {
+        cin>>input_array[i];
+    }
   
     printf("Given array is \n"); 
-    printArray(arr, arr_size); 
+    printArray(input_array, array_size); 
   
-    mergeSort(arr, 0, arr_size - 1); 
+    mergeSort(input_array, 0, array_size - 1); 
   
     printf("\nSorted array is \n"); 
-    printArray(arr, arr_size); 
+    printArray(input_array, array_size); 
     return 0; 
 } 

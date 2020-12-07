@@ -1,59 +1,62 @@
+// URL: https://www.geeksforgeeks.org/quick-sort/
+
 #include <bits/stdc++.h> 
 using namespace std;  
-  
-void swap(int* a, int* b)  
-{  
-    int t = *a;  
-    *a = *b;  
-    *b = t;  
-}  
 
 
-int partition(int arr[], int low, int high)
+int partitionArray(int input_array[], int left_ptr, int right_ptr)
 {
-    int pivot=arr[high];
-    int pIndex=low;
-
-    for(int i=low;i<=high-1;i++)
+    int pivot_element = input_array[right_ptr];
+    int i = left_ptr-1;
+    int j =left_ptr;
+    while(j<right_ptr)
     {
-        if(arr[i]<=pivot)
+        if(input_array[j]<pivot_element)
         {
-            swap(&arr[i],&arr[pIndex]);
-            pIndex++;
+            i++;
+            swap(input_array[i],input_array[j]);
         }
+        j++;
     }
-    swap(&arr[pIndex],&arr[high]);
-
-    return pIndex;
+    swap(input_array[i+1], input_array[right_ptr]);
+    return (i+1);
 }
 
 
-void quickSort(int arr[], int low, int high)
+void quickSort(int input_array[], int left_ptr, int right_ptr)
 {
-    if(low<high)
+    if(left_ptr<right_ptr)
     {
-        int index = partition(arr,low,high);
+        int pivot_index=partitionArray(input_array,left_ptr,right_ptr);
 
-        quickSort(arr,low,index-1);
-        quickSort(arr,index+1,high);
+        quickSort(input_array, left_ptr, pivot_index-1);
+        quickSort(input_array, pivot_index+1, right_ptr);
     }
 }
 
 
-void printArray(int arr[], int size)  
+
+void printArray(int input_array[], int array_size)  
 {  
     int i;  
-    for (i = 0; i < size; i++)  
-        cout << arr[i] << " ";  
+    for (i = 0; i < array_size; i++)  
+        cout << input_array[i] << " ";  
     cout << endl;  
 }  
   
 int main()  
 {  
-    int arr[] = {10, 7, 8, 9, 1, 5};  
-    int n = sizeof(arr) / sizeof(arr[0]);  
-    quickSort(arr, 0, n - 1);  
+    int array_size;
+    cin>>array_size;
+
+    int input_array[array_size];  
+    for(int i=0;i<array_size;i++)
+    {
+        cin>>input_array[i];
+    }  
+
+    quickSort(input_array, 0, array_size - 1);  
     cout <<"Sorted array: \n";  
-    printArray(arr, n);  
+    printArray(input_array, array_size);  
     return 0;  
 }  

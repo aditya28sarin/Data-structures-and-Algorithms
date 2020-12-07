@@ -14,12 +14,7 @@
 // Output : -1
 // Element x is not present in arr[].
 
-
--------------------------------------------------------------------------------------------------------
-						CODE
--------------------------------------------------------------------------------------------------------
-
-#include <bits/stdc++.h> 
+#include <iostream> 
 using namespace std; 
   
 int linearSearch(int input_array[], int size_of_array, int x) 
@@ -36,9 +31,10 @@ int linearSearch(int input_array[], int size_of_array, int x)
 int main() 
 { 
     int input_array[] = {1, 10, 30, 15}; 
-    int x = 30;  
+    int x;
+    cin>>x;
     int size_of_array = sizeof(input_array)/sizeof(input_array[0]); 
-    cout << x << " is present at index " 
+    std::cout << x << " is present at index " 
               << linearSearch(input_array, size_of_array, x); 
    
     return 0; 

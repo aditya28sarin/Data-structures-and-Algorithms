@@ -50,84 +50,84 @@ int main()
 
 //Method 2
 
-#include<iostream>
-using namespace std;
+// #include<iostream>
+// using namespace std;
 
-int main()
-{
-   int cases;
+// int main()
+// {
+//    int cases;
 
-   cin>>cases;
+//    cin>>cases;
 
-   while(cases--)
-   {
-       int size1,rotate_size;
+//    while(cases--)
+//    {
+//        int size1,rotate_size;
 
-       cin>>size1>>rotate_size;
-       int arr[size1],arr1[size1];
+//        cin>>size1>>rotate_size;
+//        int arr[size1],arr1[size1];
 
-       for(int i=0;i<size1;i++)
-       {
-           cin>>arr[i];
-       }
+//        for(int i=0;i<size1;i++)
+//        {
+//            cin>>arr[i];
+//        }
 
-        for(int i=0;i<size1;i++)
-       {
-           if(rotate_size==size1)
-           {
-           rotate_size=0;
-           }
-           arr1[i]=arr[rotate_size];
-           rotate_size++;
-           cout<<arr1[i]<<" ";
+//         for(int i=0;i<size1;i++)
+//        {
+//            if(rotate_size==size1)
+//            {
+//            rotate_size=0;
+//            }
+//            arr1[i]=arr[rotate_size];
+//            rotate_size++;
+//            cout<<arr1[i]<<" ";
 
-           }
+//            }
 
-       cout<<endl;
-
-
+//        cout<<endl;
 
 
-   }
 
-}
 
-//method 3
-int main()
-{
+//    }
 
-    int cases;
+// }
 
-    cin>>cases;
+// //method 3
+// int main()
+// {
 
-    while(cases--)
-    {
-        int n,d;
-        cin>>n>>d;
-        int arr[n],temp;
-        auto j=0;
+//     int cases;
 
-        for(int i=0;i<n;i++)
-        {
+//     cin>>cases;
 
-            cin>>arr[i];
-        }
+//     while(cases--)
+//     {
+//         int n,d;
+//         cin>>n>>d;
+//         int arr[n],temp;
+//         auto j=0;
 
-        for(int i=0;i<d;i++)
-        {
-            temp=arr[0];
-            for(j=0;j<n-1;j++)
-            {
-                arr[j]=arr[j+1];
-            }
-            arr[j]=temp;
-        }
+//         for(int i=0;i<n;i++)
+//         {
 
-        for(int i=0;i<n;i++)
-        {
+//             cin>>arr[i];
+//         }
 
-            cout<<arr[i]<<" ";
-        }
-        cout<<endl;
-    }
-}
+//         for(int i=0;i<d;i++)
+//         {
+//             temp=arr[0];
+//             for(j=0;j<n-1;j++)
+//             {
+//                 arr[j]=arr[j+1];
+//             }
+//             arr[j]=temp;
+//         }
+
+//         for(int i=0;i<n;i++)
+//         {
+
+//             cout<<arr[i]<<" ";
+//         }
+//         cout<<endl;
+//     }
+// }

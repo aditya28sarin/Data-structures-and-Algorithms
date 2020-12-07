@@ -38,9 +38,9 @@
 // 1 <= arr[i] <= 1000
 
 
--------------------------------------------------------------------------------------------------------
-						CODE
--------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------
+// 						CODE
+// -------------------------------------------------------------------------------------------------------
 
 
 //method 1 O(n^3)
@@ -50,8 +50,6 @@ using namespace std;
 //return sum of all odd size subarrays separated out from the input array 
 int sumOddLengthSubarrays(vector<int> &input_array, int size_of_array)
 {   
-
-    int sum_of_odd_subarrays=0;
 
     int j=1;
     int sum=0;
@@ -98,29 +96,29 @@ int main()
 
 //method 2 O(n^2) - Sliding Window 
 
-class Solution {
-public:
-    int sumOddLengthSubarrays(vector<int>& input_array) {
+// class Solution {
+// public:
+//     int sumOddLengthSubarrays(vector<int>& input_array) {
    
-        int size_of_array=input_array.size();
-        int res=0;
-        for(int len=1;len<=size_of_array;len+=2)
-        {
-            for(int i=0,sum=0;i<size_of_array;i++)
-            {
-                sum+=input_array[i];
+//         int size_of_array=input_array.size();
+//         int res=0;
+//         for(int len=1;len<=size_of_array;len+=2)
+//         {
+//             for(int i=0,sum=0;i<size_of_array;i++)
+//             {
+//                 sum+=input_array[i];
                 
-                if(i>=len)
-                {
-                    sum-=input_array[i-len];
-                }
+//                 if(i>=len)
+//                 {
+//                     sum-=input_array[i-len];
+//                 }
                 
-                if(i>=len-1)
-                {
-                    res+=sum;
-                }
-            }
-        }
-            return res;
-        }
-};
+//                 if(i>=len-1)
+//                 {
+//                     res+=sum;
+//                 }
+//             }
+//         }
+//             return res;
+//         }
+// };

@@ -1,3 +1,5 @@
+// URL: https://www.geeksforgeeks.org/bubble-sort/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -22,7 +24,7 @@ void iterativeBubbleSort(int input_array[], int size_of_array)
 
 void recursiveBubbleSort(int input_array[], int size_of_array)
 {
-    if(size<=1)
+    if(size_of_array<=1)
         return;
     
     for(int i=0; i<size_of_array-1;i++)
@@ -48,8 +50,16 @@ void printArray(int input_array[], int size_of_array)
   
 int main()  
 {  
-    int input_array[] = {64, 34, 25, 12, 22, 11, 90};  
-    int size_of_array = sizeof(arr)/sizeof(arr[0]);  
+    int size_of_array;
+    cin>>size_of_array;
+
+    int input_array[size_of_array];
+
+    for(int i=0;i<size_of_array;i++)
+    {
+        cin>>input_array[i];
+    } 
+
     iterativeBubbleSort(input_array, size_of_array);  
     cout<<"Sorted array: \n";  
     printArray(input_array, size_of_array);  

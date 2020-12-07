@@ -1,3 +1,5 @@
+// URL:https://www.geeksforgeeks.org/selection-sort/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -8,63 +10,62 @@ void swap(int &a,int &b)
     b=temp;
 }
 
-void selectionSort(int arr[], int n)
+void selectionSort(int input_array[], int size_of_array)
 {
-    for(int i=0;i<n;i++)
+    for(int i=0;i<size_of_array-1;i++)
     {
-        int temp=arr[i],min_index;
-        for(int j=i;j<n;j++)
+       
+        for(int j=i+1;j<size_of_array;j++)
         {
-            if(arr[j]<=temp)
+            if(input_array[j]<=input_array[i])
             {
-                temp=arr[j];
-                min_index=j;
+                swap(input_array[i],input_array[j]);
             }
         }
-        swap(arr[i],arr[min_index]);
     }
+     for (int i=0; i < size_of_array; i++)  
+        cout << input_array[i] << " ";  
+    cout << endl;  
 }
 
 //recursive solution
-void recursiveSelectionSort(int arr[], int n, int start)
+void recursiveSelectionSort(int input_array[], int size_of_array, int start)
 {
-    if(start==n-1)
+    if(start==size_of_array-1)
         return;
 
-    int temp = arr[start];
+    int temp = input_array[start];
     int min_index;
-    for(int i=start;i<n;i++)
+    for(int i=start;i<size_of_array;i++)
     {
-        if(arr[i]<=temp)
+        if(input_array[i]<=temp)
         {
-            temp=arr[i];
+            temp=input_array[i];
             min_index=i;
         }
     }
-    swap(arr[start],arr[min_index]);
+    swap(input_array[start],input_array[min_index]);
 
-    recursiveSelectionSort(arr,n,start+1);
+    recursiveSelectionSort(input_array,size_of_array,start+1);
 }
 
-void printArray(int arr[], int size)  
-{  
-    int i;  
-    for (i=0; i < size; i++)  
-        cout << arr[i] << " ";  
-    cout << endl;  
-}  
   
 int main()  
 {  
-    int arr[] = {64, 59, 9, 20, 2};  
-    int n = sizeof(arr)/sizeof(arr[0]);  
-    selectionSort(arr, n);  
+    int size_of_array;
+    cin>>size_of_array;
+    int input_array[size_of_array];
+    for(int i=0;i<size_of_array;i++)
+    {
+        cin>>input_array[i];
+    }
+    
     cout << "Sorted array: \n";  
-    printArray(arr, n);  
+    selectionSort(input_array, size_of_array);  
 
 
-    recursiveSelectionSort(arr,n,0);
     cout << "\n\nSorted array with Recursive Solution: \n";  
-    printArray(arr, n); 
+    recursiveSelectionSort(input_array,size_of_array,0);
+
     return 0;  
 }  
