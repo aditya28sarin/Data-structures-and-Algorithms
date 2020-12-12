@@ -348,7 +348,6 @@ int main()
     head3=intersectionOfLL(head1,head2);
     printList(&head3);
 
-    
 }
 
 //other method 
