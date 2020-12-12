@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+
+void printPattern(int n, int val)
+{
+    if(val==n)
+    {
+        return;
+    }
+    
+    cout<<val<<" ";
+    
+    if(n>0)
+        printPattern(n,n-5);
+    if(n<=0)
+        printPattern(n,n+5);
+}
+
+int main() {
+	int cases;
+	cin>>cases;
+	while(cases--)
+	{
+	    int number;
+	    cin>>number;
+	    
+
+        int val=number-5;
+        cout<<number<<" ";
+	    printPattern(number,val);
+	    cout<<endl;
+	}
+	return 0;
+}

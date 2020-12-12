@@ -53,11 +53,18 @@ void insertionSortRecursive(int input_array[],int n)
 
     if(n<=1)
         return;
-    else
-    {
-        insertionSortRecursive(input_array,n-1);
-    }
 
+        insertionSortRecursive(input_array,n-1);
+
+        int key=input_array[n-1];
+        int j=n-2;
+
+        while(j>=0 && input_array[j]>key)
+        {
+            input_array[j+1]=input_array[j];
+            j--;
+        }
+        input_array[j+1]=key;
 }
 
 void printArray(int input_array[], int n)
