@@ -1,5 +1,5 @@
 
-/* Link list node */
+// Link list node
 /*
 struct Node
 {
