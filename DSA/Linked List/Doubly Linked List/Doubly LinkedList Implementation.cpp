@@ -102,6 +102,7 @@ void beforeGivenNode(Node** head_ref,int data, int pos)
 
 }
 
+
 //deleting a ndoe from Doubly Linked List
 void deleteNode( Node** head_ref, int pos)
 {
