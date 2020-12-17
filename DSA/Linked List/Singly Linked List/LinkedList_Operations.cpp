@@ -222,6 +222,7 @@ void reverseList(Node** head_ref)
         prev_node=curr_node;
         curr_node=next_node;
     }
+    
     (*head_ref)=prev_node;
 }
 
