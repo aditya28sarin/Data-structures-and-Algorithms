@@ -40,7 +40,6 @@ int shortestPath(int arr[][5], int i, int j, int x, int y)
 	int min_dist = shortestPathUtil(arr,i,j,x,y,visited);
 
 	return min_dist;
-
 }
 
 int main()
