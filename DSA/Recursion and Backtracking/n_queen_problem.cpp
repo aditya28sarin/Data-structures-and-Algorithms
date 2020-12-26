@@ -45,8 +45,11 @@ bool isSafe(int **arr, int row, int col, int n)
 
 bool nQueen(int** arr, int row, int n)
 {
-	if(row>=n)
-		return true;
+	///we have successfully placed 'n' queens, now print matrix 
+	if(row==n)
+	{
+        return true;
+	}
 
 	//for each column
 	for(int i=0;i<n;i++)
