@@ -4,12 +4,6 @@
 using namespace std;
 
 
-// bool isValid(int arr[5][5], int i, int j)
-// {
-// 	return (i>=0 && j>=0 && i<5 && j<5 && arr[i][j]==0);
-// }
-
-
 void displayBoard(int arr[5][5])
 {
 	for(int i=0;i<5;i++)
