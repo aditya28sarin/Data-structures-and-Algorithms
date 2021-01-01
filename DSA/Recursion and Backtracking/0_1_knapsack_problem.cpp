@@ -1,25 +1,66 @@
+// URL: https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1
+
 #include<bits/stdc++.h>
 using namespace std;
 
-int knapsackProblem(int value[], int wt[], int n, int W)
+int knapSackUtil(int W, int wt[], int val[], int n, int** mem)
 {
-	if(n==0 || W==0)
-	{
-		return 0;
-	}
-
-	if(wt[n-1]>W)
-		return knapsackProblem(value,wt,n-1,W);
-
-	return max(knapsackProblem(value, wt, n-1, W-wt[n-1])+value[n-1],knapsackProblem(value,wt,n-1,W));
+    if(W==0 || n==0)
+    return 0;
+    
+    if(mem[W][n]!=-1)
+        return mem[W][n];
+        
+    int result;
+    
+    if(wt[n]>W)
+        result= knapSackUtil(W,wt,val,n-1, mem);
+    else
+        result= max(knapSackUtil(W-wt[n],wt,val,n-1, mem)+val[n],knapSackUtil(W,wt,val,n-1, mem));
+        
+    return mem[W][n]=result;
 }
 
 
-int main(){
+int knapSack(int W, int wt[], int val[], int n) 
+{ 
+   int** mem=new int*[n];
+   
+   for(int i=0;i<n;i++)
+	{
+		mem[i]=new int[n];
+
+		for(int j=0;j<n;j++)
+		{
+			mem[i][j]=-1; 
+		}
+	}
+   
+   return knapSackUtil(W,wt,val,n,mem);
+}
 
 
-	int value[3]={100,50,150};
-	int wt[3]={10,20,30};
-	int W=50;
-	cout<<knapsackProblem(value,wt,3,W)<<endl;
+
+int main()
+ {
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n, w;
+        cin>>n>>w;
+        
+        int val[n];
+        int wt[n];
+        
+        for(int i=0;i<n;i++)
+            cin>>val[i];
+        
+        for(int i=0;i<n;i++)
+            cin>>wt[i];
+        
+        cout<<knapSack(w, wt, val, n)<<endl;
+        
+    }
+	return 0;
 }
