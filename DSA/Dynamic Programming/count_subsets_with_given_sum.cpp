@@ -1,10 +1,11 @@
+// URL: https://www.geeksforgeeks.org/count-of-subsets-with-sum-equal-to-x/
 
 #include<iostream>
 using namespace std;
 
 int findCnt(int set[], int n, int sum){
 
-    bool dp[n+1][sum+1];
+    int dp[n+1][sum+1];
 
     for(int i=0;i<=n;i++)
         dp[i][0]=1;
@@ -33,9 +34,9 @@ int findCnt(int set[], int n, int sum){
 
 int main() 
 { 
-    int arr[] = { 1,2,1}; 
+    int arr[] = { 3,3,3,3}; 
     int n = sizeof(arr) / sizeof(int); 
-    int x = 3; 
+    int x = 6; 
   
     cout << findCnt(arr, n, x); 
   

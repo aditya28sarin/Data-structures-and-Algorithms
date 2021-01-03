@@ -18,13 +18,13 @@ bool isSubsetSum(int set[], int n, int sum){
         for(int j=1;j<=sum;j++)
         {
             
-            if (set[i-1]>j)
-                dp[i][j]=dp[i-1][j];
-            
-            else if(set[i-1]<=j)
+             if(set[i-1]<=j)
             {
                 dp[i][j]=dp[i-1][j] || dp[i-1][j-set[i-1]];
             }
+
+            else
+                dp[i][j]=dp[i-1][j];
         }
     }
 
