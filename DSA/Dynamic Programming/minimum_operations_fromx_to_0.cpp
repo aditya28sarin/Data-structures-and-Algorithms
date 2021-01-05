@@ -1,3 +1,5 @@
+//URL: https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/submissions/
+
 #include<bits/stdc++.h>
 using namespace std;
 
