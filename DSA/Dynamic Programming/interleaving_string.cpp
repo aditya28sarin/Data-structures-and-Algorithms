@@ -54,5 +54,8 @@ bool isInterleave(string s1, string s2, string s3) {
 
 int main()
 {
-    cout<<isInterleave("aa","bb","acab");
+    string str1="aa";
+    string str2="bb";
+    string res="bbaa";
+    cout<<isInterleave(str1,str2,res);
 }
