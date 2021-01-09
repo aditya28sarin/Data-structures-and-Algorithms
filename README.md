@@ -1,6 +1,6 @@
 # Cpp-Codes
 
-This repository contains all of my C++ practice codes till date. 
+This repository is created to build a code vault for DSA questions in C++. 
 
 ## It contains the following topics
 
