@@ -1,7 +1,8 @@
-// URL: https://leetcode.com/problems/maximal-square/
+// URL: https://leetcode.com/problems/maximal-squa
 
 
 class Solution {
+
 public:
     int maximalSquare(vector<vector<char>>& matrix) {
         
