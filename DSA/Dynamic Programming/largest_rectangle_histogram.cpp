@@ -9,7 +9,7 @@ public:
         
         stack <int> st;
         
-        //left to right traversla to keep trakc of the left limit
+        //left to right traversal to keep track of the left limit
         for(int i=0;i<n;i++){
             
             if(st.empty()){
@@ -29,7 +29,7 @@ public:
         while(!st.empty()){
             st.pop();
         }
-        
+        //right limit
         for(int i=n-1;i>=0;--i){
             if(st.empty()){
                 right[i]=n-1;
