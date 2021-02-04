@@ -1,3 +1,5 @@
+// URL: https://www.geeksforgeeks.org/index-mapping-or-trivial-hashing-with-negatives-allowed/
+
 #include<bits/stdc++.h>
 using namespace std;
 #define MAX 1000

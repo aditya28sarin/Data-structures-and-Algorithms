@@ -1,62 +1,57 @@
+// URL: https://www.geeksforgeeks.org/c-program-hashing-chaining/
+
 #include<bits/stdc++.h>
 using namespace std;
 
-
 class Hash{
-  public:
-    int buckets;
-     list <int> *table;
-    
-    Hash(int b)
-    {
-        this->buckets=b;
-        table = new list <int>[buckets];
-    }
-  
-    void insertItem(int x)
-    {
-        int index = hashFunction(x);
-        table[index].push_back(x);
-    }
-  
-    void deleteItem(int x)
-    {
-        int index = hashFunction(x);
-
-        list <int> :: iterator i;
-
-        for(i=table[index].begin(); i!=table[index].end();i++)
-        {
-            if(*i==x)
-                break;
-        }
-
-        if(i!=table[index].end())
-        {
-            table[index].erase(i);
-        }
-    }
-
-    void displayHash()
-    { 
-        for(int i=0;i<buckets;i++){
-            cout<<i;
-        list<int>  :: iterator j;
-        for (j=table[i].begin();j!=table[i].end();j++)
-        {
-            cout << " --> " << *j; 
-        } 
-        
-        cout << endl; 
-         }
-    }
-
-    
-    int hashFunction(int x) { 
-        return (x % buckets); 
-    } 
-  
+	int BUCKET;
+	
+	list<int> *table;
+	
+	public:
+		Hash(int b);
+		void insertItem(int x); 
+		void deleteItem(int x);
+		
+		int hashFunction(int x){
+			return x%BUCKET;
+		}
 };
+
+Hash::Hash(int b){
+	this->BUCKET = b;
+	table = new list<int>[BUCKET];	
+}
+
+void Hash::insertItem(int key){
+	int index = hashFunction(key);
+	table[index].push_back(key);
+}
+
+void Hash::deleteItem(int key){
+	int index = hashFunction(key);
+	
+	list<int> :: iterator i;
+	
+	for(i=table[index].begin(); i!=table[index].end();i++){
+		if(*i==key){
+			break;
+		}
+	}
+	
+	if (i != table[index].end()) 
+		table[index].erase(i); 
+}
+
+void Hash::displayHash() { 
+  for (int i = 0; i < BUCKET; i++) { 
+    cout << i; 
+    for (auto x : table[i]) 
+      cout << " --> " << x; 
+    cout << endl; 
+  } 
+} 
+
 
 int main() 
 { 
@@ -65,8 +60,7 @@ int main()
   int n = sizeof(a)/sizeof(a[0]); 
   
   // insert the keys into the hash table 
-  Hash h(7);   // 7 is count of buckets in 
-               // hash table 
+  Hash h(7);  
   for (int i = 0; i < n; i++)  
     h.insertItem(a[i]);   
   
