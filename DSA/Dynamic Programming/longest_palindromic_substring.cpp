@@ -1,20 +1,36 @@
-// URL: https://leetcode.com/problems/longest-palindromic-subsequence/
+// URL: https://leetcode.com/problems/longest-palindromic-substring/
 
 class Solution {
 public:
-    int longestPalindromeSubseq(string s) {
-        int n = s.length();
-        string str = s;
-        reverse(str.begin(),str.end());
-        vector<vector<int>> dp(n+1,vector<int>(n+1,0));
-        for(int i=1;i<=n;i++) {
-            for(int j=1;j<=n;j++) {
-                if(s[i-1]==str[j-1]) 
-                    dp[i][j] = 1+dp[i-1][j-1];
-                else 
-                    dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
+    string longestPalindrome(string s) {
+      
+        bool dp[s.size()][s.size()];
+        memset(dp,0,sizeof(dp));
+        
+        for(int i=0;i<s.size();i++){
+            dp[i][i]=true;
+        }
+        
+        string result="";
+        result+=s[0];
+        
+        for(int i=s.size()-1;i>=0;i--){
+            
+            for(int j=i+1;j<s.size();j++){
+                
+                if(s[i]==s[j]){
+                    if((j-i)==1 || dp[i+1][j-1] ){
+                        dp[i][j]=true;
+                        
+                        if(result.size()< j-i+1){
+                            result=s.substr(i,j-i+1);
+                        }
+                        // result=((j-i+1)>result.size()) ? s.substr(i,j-i+1) : result;
+                    }
+                }
+                
             }
         }
-        return dp[n][n];
+        return result;
     }
 };
