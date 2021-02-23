@@ -1,5 +1,7 @@
 // URL: https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/
 
+
+//O(rlogc)
 class Solution {
 public:
     int countNegatives(vector<vector<int>>& arr) {
@@ -43,3 +45,11 @@ public:
     return count;
     }
 };
+
+
+//O(r+c)
+
+// The idea is to start from the top right corner.
+// If it is negative then all the numbers below in that column will be negative. We can add all of it to our answer nr-r. 
+//Then we move one coulmn left c--and repeat the same process.
+// If it is not negative then we move one row down r++ until we find a negative number.
