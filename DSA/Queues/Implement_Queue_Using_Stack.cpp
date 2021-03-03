@@ -1,51 +1,46 @@
-#include<bits/stdc++.h>
-using namespace std;
+// URL: https://leetcode.com/problems/implement-queue-using-stacks/
 
-class Queue{
+class MyQueue {
+    stack<int> push_s, pop_s;
+    
 public:
-    stack <int> st1,st2;
-
-void enqueue(int data)
-{
-    st1.push(data);
-}
-
-
-int dequeue()
-{
-    int val;
-    if(st1.empty() && st2.empty())
-        cout<<"Error!"<<endl;
-
-    if(st2.empty())
-    {
-        while(!st1.empty())
-        {
-            st2.push(st1.top());
-            st1.pop();
-        }   
+    /** Initialize your data structure here. */
+    MyQueue() {
     }
-      val = st2.top();
-      st2.pop();
     
-
-      return val;
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        push_s.push(x);    
+    }
     
+    void transfer_elements() {
+        // transfer the elements from push stack to pop
+        while(!push_s.empty()) {
+            pop_s.push(push_s.top());
+            push_s.pop();
+        }    
+    }
     
-}
-
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {
+        if(pop_s.empty()) 
+            transfer_elements();
+        
+        int popped = pop_s.top();
+        pop_s.pop();
+        return popped;
+    }
+    
+    /** Get the front element. */
+    int peek() {
+        if(pop_s.empty()) 
+            transfer_elements();
+        
+        return pop_s.top();
+    }
+    
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return push_s.empty() && pop_s.empty();    
+    }
 };
-
-int main()
-{
-    Queue q;
-    q.enqueue(1);
-    q.enqueue(2); 
-    q.enqueue(3); 
-  
-    cout << q.dequeue() << '\n'; 
-    cout << q.dequeue() << '\n'; 
-    cout << q.dequeue() << '\n'; 
-  
-    return 0; 
-}
