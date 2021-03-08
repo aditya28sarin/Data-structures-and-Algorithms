@@ -273,25 +273,25 @@ Node* intersectionOfLL(Node* head1, Node* head2)
 }
 
 
-Node* Reverse(Node* head)
-{
+// Node* Reverse(Node* head)
+// {
 
-    Node* currPtr=head;
-    Node* prevPtr=NULL;
-    Node* nextPtr=head;
+//     Node* currPtr=head;
+//     Node* prevPtr=NULL;
+//     Node* nextPtr=head;
 
 
-    while(currPtr!=NULL)
-    {
-        nextPtr=currPtr->next;
-        currPtr->next=prevPtr;
-        prevPtr=currPtr;
-        currPtr=nextPtr;
-    }
-    head=prevPtr;
+//     while(currPtr!=NULL)
+//     {
+//         nextPtr=currPtr->next;
+//         currPtr->next=prevPtr;
+//         prevPtr=currPtr;
+//         currPtr=nextPtr;
+//     }
+//     head=prevPtr;
 
-    return head;
-}
+//     return head;
+// }
 
 int GetNth(Node* head, int index){
   int temp=0;

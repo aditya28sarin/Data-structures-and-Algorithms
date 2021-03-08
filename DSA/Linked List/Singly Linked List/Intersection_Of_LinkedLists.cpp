@@ -68,7 +68,7 @@ int main()
     push(&head1, 3);
     push(&head1, 2);
     push(&head1, 1);
-
+Node* 
     printList(head1);
 
     /* 2->4->6->8 */
