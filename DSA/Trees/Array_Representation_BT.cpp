@@ -1,75 +1,59 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int arr[10];
+char tree[10];
 
 
-int* set_parent(int key)
-{
-    if(arr[0]!='\0')
-        cout<<"Tree already has a root"<<endl;
-    else
-    {
-        arr[0]=key;
+int root(char val){
+    if(tree[0]!='\0'){
+        cout<<"Root is already present!";
+    }else{
+        tree[0]=val;
     }
-    return arr;   
+    return 0;
 }
 
-
-int* set_left( int parent, int key)
-{
-    if(arr[0]=='\0')
-        cout<<"Cannot insert a child here as no root"<<endl;
-    
-    else
-    {
-        arr[2*parent+1]=key;
+int set_left(char val, int parent){
+    if(tree[parent]=='\0'){
+        cout<<"cannot set child of NULL";
+    }else{
+        tree[parent*2+1]=val;
     }
     
-    return arr;
+    return 0;
 }
 
-
-int* set_right( int parent, int key)
-{
-    if(arr[0]=='\0')
-        cout<<"Cannot insert a child here as no root"<<endl;
-    
-    else
-    {
-        arr[2*parent+2]=key;
-    } 
-
-    return arr;
-}
-
-
-void print_tree()
-{
-    for(int i=0;i<10;i++)
-    {
-        if(arr[i]!='\0')
-        cout<<arr[i]<<" ";
-       else
-       {
-           cout<<'-';
-       }
+int set_right(char val, int parent){
+    if(tree[parent]=='\0'){
+        cout<<"cannot set child of NULL";
+    }else{
+        tree[parent*2+2]=val;
     }
+    
+    return 0;
 }
 
 
-int main()
+int print_tree()
 {
-    set_parent(1);
-    set_left(0,2);
-    set_right(0,3);
-    set_parent(2);
-    set_left(1,4);
-    set_right(1,5);
-    set_parent(3);
-    
-    set_left(2,6);
-    set_right(2,7);
-    
+    cout << "\n";
+    for(int i = 0; i < 10; i++)
+    {
+        if(tree[i] != '\0')
+            cout << tree[i];
+        else
+            cout << "-";
+    }
+    return 0;
+}
+
+int main(){
+    root('A');
+    //insert_left('B',0);
+    set_right('C', 0);
+    set_left('D', 1);
+    set_right('E', 1);
+    set_right('F', 2);
     print_tree();
+    return 0;
 }

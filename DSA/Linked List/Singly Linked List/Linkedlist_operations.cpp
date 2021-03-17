@@ -127,7 +127,7 @@ int GetNth(Node** head_ref, int index){
   return ptr->data;
 }
 
-
+//get nth ndoe from the end
 int getNthFromLast(Node** head_ref, int n)
 {      int c=0;
        Node* ptr=(*head_ref);
@@ -196,6 +196,76 @@ void swapTwoNodes(Node** head_ref, int x, int y)
     Node* temp = curr1->next;
     curr1->next=curr2->next;
     curr2->next=temp;
+}
+
+
+Node* swapNodes(Node* head, int k){
+    
+    // cout<<data1<<endl;
+    // cout<<n<<endl;
+    
+    // data2=temp2->data;
+    // cout<<data2<<endl;
+    
+    if(k==1){
+        
+        Node* b=head;
+        while(b->next!=NULL){
+            b=b->next;
+        }
+        swap(b->data,head->data);
+    }else{
+        
+        
+     Node* temp1 = head;
+    int data1,data2;
+    int c1=k;
+    int n=0;
+    while(temp1!=NULL){
+        c1--;
+        if(!c1){
+            data1=temp1->data;
+        }
+        temp1=temp1->next;
+        n++;
+    }
+    
+    int c2 = (n-k);
+    Node* temp2=head;
+    
+    while(c2--){
+        temp2=temp2->next;
+    }
+    
+    Node* curr1=head;
+    Node* prev1=NULL;
+    
+    
+    Node* curr2=head;
+    Node* prev2=NULL;
+  
+ 
+        while(curr1 && curr1->data!=data1)
+    {
+        prev1=curr1;
+        curr1=curr1->next;
+    } 
+    
+        while(curr2 && curr2->data!=data2)
+    {
+        prev2=curr2;
+        curr2=curr2->next;
+    }
+   
+    prev1->next=curr2;
+    prev2->next=curr1;
+    
+    Node* temp = curr1->next;
+    curr1->next=curr2->next;
+    curr2->next=temp;
+    }
+    
+    return head;
 }
 
 //find median 
@@ -502,7 +572,181 @@ void FrontBackSplit(Node* source, Node** frontRef, Node** backRef)
     slow->next = NULL; 
 } 
 
+//remove nth node from end of List
+Node* removeNthFromBack(Node* head, int n){
+    Node* ptr = head;
+    
+    int c=0;
 
+   while(ptr!=NULL)
+   {
+       ptr=ptr->next;
+       c++;
+   }
+    
+    cout<<c<<endl;
+    cout<<n<<endl;
+    
+    Node* curr=head;
+    
+    if(n==c){
+        head=head->next;
+        return head;
+    }
+    
+    c=(c-n);
+
+    while(c>1){
+        c--;
+        curr=curr->next;
+    }
+    
+    if(n==1){
+        curr->next=NULL;
+        return head;
+    }
+    
+    cout<<curr->data<<endl;
+    
+    curr->next=curr->next->next;
+    
+    return head;
+
+}
+
+
+//add two numbers
+Node* addNumbers(Node* head1, Node* head2){
+    
+    if(!head1){
+        return head2;
+    }
+    
+    if(!head2){
+        return head1;
+    }
+    
+    
+    Node* temp1=head1;
+    Node* temp2 =head2;
+    Node* t=head1;
+    int cry=0;
+    while(temp1){
+        
+        if(temp1 && temp2){
+            if((temp1->data+temp2->data+cry)/10==0){
+                temp1->data = temp1->data + temp2->data + cry;
+                cry=0;
+            }
+            else if((temp1->data + temp2->data +cry)/10!=0){
+               int val = (temp1->data + temp2->data + cry)%10;
+                cry=(temp1->data + temp2->data + cry)/10;
+                
+                temp1->data=val;
+            }
+            
+            temp1=temp1->next;
+            temp2=temp2->next;
+        }else{
+            if((temp1->data+cry)/10==0){
+                temp1->data = temp1->data + cry;
+                cry=0;
+            }
+            else if((temp1->data +cry)/10!=0){
+                int val  = (temp1->data + cry)%10;
+                cry= (temp1->data + cry)/10;
+                
+                temp1->data=val;
+            }
+            temp1=temp1->next;
+        }
+        
+    }
+    
+    if(cry!=0){
+            insertAtEnd(&head1,1);
+        }
+    
+    return head1;
+}
+
+
+//detect loop
+bool detectLoop(Node* head)
+{
+    Node* slow_ptr=head;
+    Node* fast_ptr=head;
+    
+    while(slow_ptr && fast_ptr && fast_ptr->next)
+    {
+        fast_ptr=fast_ptr->next->next;
+        slow_ptr=slow_ptr->next;
+        if(slow_ptr==fast_ptr)
+        {
+            return 1;
+            
+        }
+    }
+    return 0;
+}
+
+//insertion sort
+int getDecimalValue(Node* head){
+    if(!head->next)
+        return head->data;
+        
+    Node* temp = head;
+    int sum = 0;
+    
+    int length=0;
+    while(temp!=NULL){
+        length++;
+        temp=temp->next;
+    }
+    
+    Node* temp1= head;
+    
+    while(temp1){
+        sum+=temp1->data*pow(2,length-1);
+        length--;
+        temp1=temp1->next;
+    }
+    
+    return sum;
+}
+
+
+//rotate list 
+Node* rotateList(Node* head, int k){
+    Node* temp = head;
+    int length=0;
+    
+    while(temp->next!=NULL){
+        length++;
+        temp=temp->next;
+    }
+    
+    cout<<length<<endl;
+    
+    Node* temp1=head;
+    
+    int diff=length+1-k%(length+1);
+    
+    while(diff>1){
+        
+        temp1=temp1->next;
+        diff--;
+    }
+    
+    temp->next=head;
+    head=temp1->next;
+    temp1->next=NULL;
+    
+    
+    cout<<temp1->data<<endl;
+    
+    return head;
+}
 
 //print list
 void printList(Node** head_ref)
@@ -633,11 +877,6 @@ int main()
     printList(&head3);
     
     
-    
-    
-    
-    
-    
      Node* head4 =new Node();
     head4=NULL;
     
@@ -662,4 +901,131 @@ int main()
     
     MergeSort(&head4);
     printList(&head4);
+    
+    
+    // Node* head5 = removeNthFromBack(head4, 6);
+    // printList(&head5);
+    
+    Node* head6 = swapNodes(head4,1);
+    printList(&head6);
+    
+    
+    Node* head7 = NULL;
+    
+    insertAtEnd(&head7,9);
+     printList(&head7);
+     
+    insertAtEnd(&head7,9);
+     printList(&head7);
+     
+    insertAtEnd(&head7,9);
+     printList(&head7);
+     
+      insertAtEnd(&head7,9);
+     printList(&head7);
+     
+      insertAtEnd(&head7,9);
+     printList(&head7);
+     
+      insertAtEnd(&head7,9);
+     printList(&head7);
+     
+      insertAtEnd(&head7,9);
+     printList(&head7);
+     
+    Node* head8 =NULL;
+    
+    insertAtEnd(&head8,9);
+     printList(&head8);
+     
+    insertAtEnd(&head8,9);
+     printList(&head8);
+     
+         insertAtEnd(&head8,9);
+     printList(&head8);
+     
+    insertAtEnd(&head8,9);
+     printList(&head8);
+    
+   Node* head9 = addNumbers(head7,head8);
+   printList(&head9);
+   
+   
+   Node* head10 =NULL;
+    
+    insertAtEnd(&head10,1);
+     printList(&head10);
+     
+    insertAtEnd(&head10,0);
+     printList(&head10);
+     
+    insertAtEnd(&head10,0);
+     printList(&head10);
+     
+     insertAtEnd(&head10,1);
+     printList(&head10);
+     
+    insertAtEnd(&head10,0);
+     printList(&head10);
+     
+    insertAtEnd(&head10,0);
+     printList(&head10);
+     
+     insertAtEnd(&head10,1);
+     printList(&head10);
+     
+     insertAtEnd(&head10,1);
+     printList(&head10);
+     
+     insertAtEnd(&head10,1);
+     printList(&head10);
+     
+     insertAtEnd(&head10,0);
+     printList(&head10);
+     
+     insertAtEnd(&head10,0);
+     printList(&head10);
+     
+     insertAtEnd(&head10,0);
+     printList(&head10);
+     
+     insertAtEnd(&head10,0);
+     printList(&head10);
+     
+     insertAtEnd(&head10,0);
+     printList(&head10);
+     
+     insertAtEnd(&head10,0);
+     printList(&head10);
+     
+   cout<< getDecimalValue(head10);
+   
+    
+    Node* head11 =NULL;
+    
+    insertAtEnd(&head11,0);
+     printList(&head11);
+    
+    insertAtEnd(&head11,1);
+     printList(&head11);
+    
+    insertAtEnd(&head11,2);
+     printList(&head11);
+     
+    //  insertAtEnd(&head11,2);
+    //  printList(&head11);
+     
+    //  insertAtEnd(&head11,3);
+    //  printList(&head11);
+     
+    //  insertAtEnd(&head11,4);
+    //  printList(&head11);
+   
+    //  insertAtEnd(&head11,5);
+    //  printList(&head11);
+   
+   
+    Node* head12 = rotateList(head11,4);
+        printList(&head12);
+    
 } 
