@@ -1,91 +1,57 @@
-#include<bits/stdc++.h>
-using namespace std; 
-  
-/* A binary tree node has data, pointer to left 
-   child and a pointer to right child */
-class Node { 
-    public:
-    int data; 
-    Node *left, *right; 
-}; 
-  
-/* Function to find index of value in arr[start...end] 
-   The function assumes that value is postsent in in[] */
-int search(int arr[], int strt, int end, int value) 
-{ 
-    int i; 
-    for (i = strt; i <= end; i++) { 
-        if (arr[i] == value) 
-            break; 
-    } 
-    return i; 
-} 
-  
-/* Helper function that allocates a new node */
-Node* newNode(int data) 
-{ 
-    Node* node = new Node();
-        node->data = data; 
-    node->left = node->right = NULL; 
-    return (node); 
-} 
-  
+// URL: https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/submissions/
 
-Node* buildTreeUtil(int in[], int post[], int start, int end, int *index, unordered_map<int,int> mp)
-{
-
-    if(start>end)
-        return NULL;
-    int curr=post[(*index)--];
-    Node* new_node = newNode(curr);
- 
-
-    if(start==end)
-        return new_node;
-
-    int in_index= mp[curr];
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
     
-    new_node->right = buildTreeUtil(in, post,in_index+1, end , index, mp);
     
-    new_node->left = buildTreeUtil(in, post,start, in_index-1, index, mp);
-    
-    return new_node;
-}
-
-
-Node* buildTree(int in[], int post[], int n)
-{
-    int index=n-1;
-
-    unordered_map<int,int> mp;
-
-    for(int i=0;i<n;i++)
-    {
-        mp[in[i]]=i;
+    int search(vector<int> &inorder, int l, int h, int value){
+        int i;
+        for(i=l;i<=h;i++){
+            if(value==inorder[i]){
+                break;
+            }
+        }
+        
+        return i;
     }
-    return buildTreeUtil(in,post,0,n-1, &index,mp); 
-}
-
-/* This funtcion is here just to test  */
-void preOrder(Node* node) 
-{ 
-    if (node == NULL) 
-        return; 
-    printf("%d ", node->data); 
-    preOrder(node->left); 
-    preOrder(node->right); 
-} 
-
-int main() 
-{ 
-    int in[] = { 4, 8, 2, 5, 1, 6, 3, 7 }; 
-    int post[] = { 8, 4, 5, 2, 6, 7, 3, 1 }; 
-    int n = sizeof(in) / sizeof(in[0]); 
-  
-    Node* root = buildTree(in, post, n); 
-  
-    cout << "Preorder of the constructed tree : \n"; 
-    preOrder(root); 
-  
-    return 0; 
-}   
+    
+    TreeNode* buildTreeUtil(vector<int>& inorder, vector<int>& postorder, int l, int h, int *pIndex){
+        
+        if(l > h){
+            return NULL;
+        }
+        
+        TreeNode* node = new TreeNode(postorder[*pIndex]);
+        (*pIndex)--;
+        
+        if(l==h){
+            return node;
+        }
+        
+        int inIndex = search(inorder , l, h, node->val);
+        
+        
+        node->right = buildTreeUtil(inorder, postorder, inIndex+1, h, pIndex);
+        node->left = buildTreeUtil(inorder, postorder, l, inIndex-1, pIndex);
+        
+        return node;
+    }
+    
+    
+    
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int pIndex = postorder.size()-1;
+        return buildTreeUtil(inorder,postorder, 0, postorder.size()-1,&pIndex);
+    }
+};
