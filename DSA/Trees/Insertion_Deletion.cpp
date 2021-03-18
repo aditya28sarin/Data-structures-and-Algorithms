@@ -1,199 +1,175 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
-class Node{
-public:
-    int data;
-    Node* left;
-    Node* right;
-
-    Node()
-    {
-        left=NULL;
-        right=NULL;
-        data=0;
-    }
-    Node(int key)
-    {
-        data=key;
-        left=NULL;
-        right=NULL;
-    }
+class Node {
+    public:
+        int data;
+        Node* left;
+        Node* right;
 };
 
 
-void inorder(Node* root)
-{
-    if(root==NULL)  
-        return;
+Node* createNode(int data){
+    Node* new_node = new Node();
+    new_node->data = data;
+    new_node->left = NULL;
+    new_node->right = NULL;
 
-    inorder(root->left);
-
-    cout<<root->data<<" ";
-
-    inorder(root->right);
+    return new_node;
 }
 
-//insert a key in BT
-void insert(Node* root, int key)
+void inorder(Node* temp)
 {
-    Node* temp =NULL;
+    if (temp == NULL)
+        return;
+ 
+    inorder(temp->left);
+    cout << temp->data << ' ';
+    inorder(temp->right);
+}
 
-    queue <Node*> q;
+//insertion of node
+Node* insertNode(Node* root, int data){
+    
+    if(root==NULL){
+        return NULL;
+    }
 
+    queue<Node*> q;
     q.push(root);
 
-     while(!q.empty())
-     {
-         temp=q.front();
-         q.pop();
+    while(!q.empty()){
 
+        Node* temp = q.front();
+        q.pop();
 
-         if(temp->left==NULL)
-         {
-            temp->left=new Node(key);
-            break;
-         }
-        else
+        if(temp->left){
             q.push(temp->left);
-        
-        if(temp->right==NULL)
-        {
-            temp->right=new Node(key);
-            break;
+        }else{
+            temp->left = createNode(data);
+            return root;
         }
 
-        else
+        if(temp->right){
             q.push(temp->right);
-     }
+        }else{
+            temp->right = createNode(data);
+            return root;
+        }
+    }
 }
 
 
-//delete key from BT
+//deletion of node
+void deleteDeepest(Node* root, Node* deletedNode){
 
-void deepestDelete(Node* root, Node* delNode)
-{
-    queue <Node*> q2;
-    q2.push(root);
-    Node* temp=NULL;
+    queue<Node*> q;
+    q.push(root);
 
-    while(!q2.empty())
-    {
-        temp=q2.front();
-        q2.pop();
+    Node* temp;
 
-        if(temp==delNode)
-        {
+    while(!q.empty()){
+        temp=q.front();
+        q.pop();
+
+        if(temp==deletedNode){
             temp=NULL;
-            delete(delNode);
+            delete(deletedNode);
             return;
         }
 
-        if(temp->right)
-        {
-            if(temp->right==delNode)
-            {
-                temp->right=NULL;
-                delete(delNode);
+        if(temp->left){
+            if(temp->left==deletedNode){
+                temp->left=NULL;
+                delete(deletedNode);
                 return;
-            }
-            else
-            {
-                q2.push(temp->right);
+            }else{
+                q.push(temp->left);
             }
         }
 
-        if(temp->left)
-        {
-            if(temp->left==delNode)
-            {
-                temp->left=NULL;
-                delete(delNode);
-                return;
-            }
+         if (temp->right) { 
+            if (temp->right == deletedNode) { 
+                temp->right = NULL; 
+                delete (deletedNode); 
+                return; 
+            } 
             else
-            {
-                q2.push(temp->left);
-            }
-            
-        }
+                q.push(temp->right); 
+        } 
     }
 }
 
 
-
-Node* deletion(Node* root, int key)
-{
-    //if the tree is empty 
+Node* deletion(Node* root, int val){
+    
     if(root==NULL)
         return NULL;
-        
-    //if the node to be deleted is a leaf
-    if(root->left==NULL && root->right==NULL)
-    {
-        if(root->data==key)
+    
+    if(root->left==NULL && root->right==NULL){
+        if(root->data == val){
             return NULL;
-        else
+        }else{
             return root;
+        }
     }
 
-    queue <Node*> q1;
-    q1.push(root);
+    queue<Node*> q;
+    q.push(root);
 
-    Node* temp=NULL;
-    Node* key_node=NULL;
+    Node* temp_node;
+    Node* key_node = NULL;
 
-    while(!q1.empty())
-    {
-        temp=q1.front();
-        q1.pop();
+    while(!q.empty()){
+        temp_node = q.front();
+        q.pop();
 
+        if(temp_node->data == val){
+            key_node=temp_node;
+        }
 
-        if(temp->data==key)
-            key_node=temp;
+        if(temp_node->left){
+            q.push(temp_node->left);
+        }
 
-        if(temp->left)
-            q1.push(temp->left);
-
-        if(temp->right)
-            q1.push(temp->right);
+        if(temp_node->right){
+            q.push(temp_node->right);
+        }
     }
 
-    if(key_node!=NULL)
-    {
-        int x=temp->data;
-        deepestDelete(root,temp);
-        key_node->data=x;
+    if(key_node!=NULL){
+        int x = temp_node->data;
+        deleteDeepest(root,temp_node);
+        key_node->data = x;
     }
+
     return root;
 }
 
-int main()
-{
-    Node* root= new Node(10);
-    root->left=new Node(11);
-    root->left->left=new Node(7);
-    root->right=new Node(9);
-    root->right->left=new Node(15);
-    root->right->right=new Node(8);
-
-    cout << "Inorder traversal before deletion : "; 
-    inorder(root); 
-
-    int key = 12; 
-    insert(root, key); 
-  
-    cout << endl; 
-    cout << "Inorder traversal after insertion:"; 
+int main(){
+    Node* root = createNode(10);
+    root->left = createNode(11);
+    root->left->left = createNode(7);
+    root->right = createNode(9);
+    root->right->left = createNode(15);
+    root->right->right = createNode(8);
+ 
+    cout << "Inorder traversal before insertion: ";
     inorder(root);
+    cout << endl;
+
+    int key = 12;
+    root = insertNode(root, key);
+ 
+    cout << "Inorder traversal after insertion: ";
+    inorder(root);
+    cout << endl;
 
 
-     int key1 = 11; 
-    root = deletion(root, key1); 
+    int del_key = 11; 
+    root = deletion(root, del_key); 
   
     cout << endl; 
     cout << "Inorder traversal after deletion : "; 
     inorder(root); 
-     
 }
