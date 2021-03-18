@@ -1,59 +1,89 @@
-bool check(Node *root)
+// URL: https://www.geeksforgeeks.org/check-leaves-level/
+
+#include <bits/stdc++.h>
+using namespace std;
+  
+class Node {
+    public:
+        int data;
+        Node *left, *right;
+};
+  
+Node* newNode(int data)
 {
-    bool flag=true;
-    
-    queue <Node*> q;
-    
-    vector<int> vt;
-    
+    Node* temp = new Node();
+    temp->data = data;
+    temp->left = temp->right = NULL;
+    return temp;
+}
+
+int checkLevelLeafNode(Node* root){
+
+  if (!root)
+        return 1;
+  
+    queue<Node*> q;
     q.push(root);
-    int maxIndex=0,index=0,counter=0,maxCounter=0;
-    while(1)
-    {
-        
-        counter=q.size();
-     
-      if (counter == 0) 
-            break; 
-     
-        
-        if(counter>maxCounter)
-        {
-            maxCounter=counter;
-            maxIndex=index;
-        }
-        
-        while(counter--)
-        {
-            Node* temp=q.front();
+  
+    int result = INT_MAX;
+     int level = 0;
+ 
+    while (!q.empty()) {
+        int size = q.size();
+        level += 1;
+ 
+        while(size > 0){
+            Node* temp = q.front();
             q.pop();
-            
-            if(temp->left)
-            {
+         
+            if (temp->left) {
                 q.push(temp->left);
+ 
+                if(!temp->left->right && !temp->left->left){
+ 
+                    if (result == INT_MAX)
+                        result = level;
+                     
+                    else if (result != level)
+                        return 0;                    
+                }
             }
-            if(temp->right)
-            {
+
+            if (temp->right){
                 q.push(temp->right);
-            }
-            
-            if(temp->left==NULL && temp->right==NULL)
-            {
-                vt.push_back(index);    
-            }
-        }
-        index++;
+ 
+                if (!temp->right->left && !temp->right->right)
+ 
+             
+                    if (result == INT_MAX)
+                        result = level;
+                     
+                    
+                    else if(result != level)
+                        return 0;
+                     
+               }
+               size -= 1;
+        }    
     }
-    
-    
-    for(int i=1;i<vt.size();i++)
-    {
-        if(vt[i]!=vt[i-1])
-        {
-            flag=false;
-            break;
-        }
-    }
-    
-    return flag;
+     
+    return 1;
+}
+  
+
+int main()
+{
+    Node* root = newNode(1);
+    root->left = newNode(2);
+    root->right = newNode(3);
+    root->left->right = newNode(4);
+    root->right->left = newNode(5);
+    root->right->right = newNode(6);
+  
+    int result = checkLevelLeafNode(root);
+    if (result)
+        cout << "All leaf nodes are at same level\n";
+    else
+        cout << "Leaf nodes not at same level\n";
+    return 0;
 }

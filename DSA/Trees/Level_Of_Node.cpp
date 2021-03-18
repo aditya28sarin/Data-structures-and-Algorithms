@@ -1,76 +1,75 @@
-//recursive 
+#include<bits/stdc++.h>
+using namespace std;
 
-int getLevelUtil(struct Node* node, int target, int level)
-{
-    if(node==NULL)
-        return 0;
-        
-    if(node->data==target)
-        return level;
-    
-    int currLevel=getLevelUtil(node->left,target,level+1);
-    
-    if(currLevel!=0)
-    return currLevel;
-    
-     currLevel=getLevelUtil(node->right,target,level+1);
-    
-    return currLevel;
+class Node {
+    public:
+        int data;
+        Node* left;
+        Node* right;
+};
+
+
+Node* createNode(int data){
+    Node* new_node = new Node();
+    new_node->data = data;
+    new_node->left = NULL;
+    new_node->right = NULL;
+
+    return new_node;
 }
 
-int getLevel(struct Node *node, int target)
+void inorder(Node* temp)
 {
-    
-    
-    return getLevelUtil(node,target,1);
-    
+    if (temp == NULL)
+        return;
+ 
+    inorder(temp->left);
+    cout << temp->data << ' ';
+    inorder(temp->right);
 }
 
+int getLevel(Node* root, int val){
 
-//iterative
+    queue<Node*> q;
+    q.push(root);
+    int level = 0;
+    while(!q.empty()){
+        int n = q.size();
 
+        while(n>0){
+            Node* temp = q.front();
+            q.pop();
 
-int getLevel(struct Node *node, int target)
-{
-    queue <Node*> st;
-    
-    st.push(node);
-    
-    if(node==NULL)
-        return 0;
-    int c=1;
-    Node* back=st.back();
-    while(!st.empty())
-    {
-    
-        Node* temp=st.front();
-        
-        if(temp->left)
-            st.push(temp->left);
-        
-        if(temp->right)
-            st.push(temp->right);
-       
-        
+            if(temp->data == val){
+                return level;
+            }
 
-        if(st.front()==back)
-        {
-            back = st.back();
-        if(temp->data==target)
-        {
-            return c;
+            if(temp->left){
+                q.push(temp->left);
+            }
+            
+            if(temp->right){
+                q.push(temp->right);
+            }
+
+            n--;
         }
-        else
-            c++;
-        }
+        level+=1;
         
-            st.pop();
-        
-        if(temp->data==target)
-        {
-            return c;
-        }
     }
-    
-    return 0;
+}
+
+
+
+int main(){
+    Node* root = createNode(10);
+    root->left = createNode(11);
+    root->left->left = createNode(7);
+    root->right = createNode(9);
+    root->right->left = createNode(15);
+    root->right->right = createNode(8);
+ 
+
+    int val = 7;
+    cout<<val<<" is on level: "<<getLevel(root,val)<<endl;
 }

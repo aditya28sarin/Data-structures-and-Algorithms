@@ -100,7 +100,6 @@ void deleteDeepest(Node* root, Node* deletedNode){
     }
 }
 
-
 Node* deletion(Node* root, int val){
     
     if(root==NULL)
@@ -146,6 +145,8 @@ Node* deletion(Node* root, int val){
     return root;
 }
 
+
+
 int main(){
     Node* root = createNode(10);
     root->left = createNode(11);
@@ -172,4 +173,8 @@ int main(){
     cout << endl; 
     cout << "Inorder traversal after deletion : "; 
     inorder(root); 
+    cout<<endl;
+
+    int val = 7;
+    cout<<val<<" is on level: "<<getLevel(root,val)<<endl;
 }
