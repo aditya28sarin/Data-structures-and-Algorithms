@@ -54,6 +54,45 @@ Node* insertNode(Node* root, int key)
 	}
 }
 
+//recursive
+void mirrorTree(Node* root){
+    if(root==NULL){
+        return;
+    }
+
+    Node* temp = NULL;
+
+    mirrorTree(root->left);
+    mirrorTree(root->right);
+
+    temp = root->left;
+    root->left = root->right;
+    root->right = temp;
+}
+
+//iterative
+void mirror(Node* root) 
+{ 
+    if (root == NULL) 
+        return; 
+  
+    queue<Node*> q; 
+    q.push(root); 
+
+    while (!q.empty()) 
+    { 
+        Node* curr = q.front(); 
+        q.pop(); 
+  
+        swap(curr->left, curr->right); 
+  
+        if (curr->left) 
+            q.push(curr->left); 
+        if (curr->right) 
+            q.push(curr->right); 
+    } 
+} 
+
 //level order traversal 
 void levelOrder(Node* root){
 	if(root==NULL)
@@ -72,32 +111,6 @@ void levelOrder(Node* root){
 	}	
 	cout<<endl;
 }
-
-
-int height(Node* root){
-	if (root == NULL) 
-        return 0; 
-	return (max(height(root->left),height(root->right)))+1;
-}
-
-bool checkIfBalanced(Node* root){
-
-    int lh,rh;
-
-    if(root==NULL){
-        return 1;
-    }
-
-    lh = height(root->left);
-    rh = height(root->right);
-
-    if(abs(rh-lh)>=1 && checkIfBalanced(root->left) && checkIfBalanced(root->right));
-        return 1;
-
-    return 0;
-
-}
-
 
 // Driver Code
 int main() 
@@ -118,14 +131,14 @@ int main()
 	 levelOrder(root); 
 	 insertNode(root, 80);
 	 levelOrder(root); 
-	cout<<endl;
-	 cout<<height(root);
 
-     if(checkIfBalanced(root)){
-         cout<<"Tree is balanced!"<<endl;
-     }else{
-         cout<<"Tree is not balanced"<<endl;
-     }
+    mirrorTree(root);
+    levelOrder(root);
+     cout<<endl;
+
+    mirror(root);
+    levelOrder(root);
+     
 
     return 0; 
 }
