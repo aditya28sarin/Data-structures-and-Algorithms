@@ -80,6 +80,17 @@ bool search(Node* root, int key){
 
 
 //delete node
+Node* minValueNode(Node* node)
+{
+    Node* current = node;
+ 
+    /* loop down to find the leftmost leaf */
+    while (current && current->left != NULL)
+        current = current->left;
+ 
+    return current;
+}
+
 Node* deleteNode(Node* root, int key){
 
     if(root==NULL){
@@ -95,8 +106,25 @@ Node* deleteNode(Node* root, int key){
     }
 
     else{
-        
+        if(!root->left){
+            Node* temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if(!root->right){
+            Node* temp = root->left;
+            free(root);
+            return temp;
+        }
+
+
+        Node* temp = minValueNode(root->right);
+
+        root->data = temp->data;
+
+        root->right = deleteNode(root->right, temp->data);
     }
+    return root;
 }
 
 
