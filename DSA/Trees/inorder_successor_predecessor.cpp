@@ -32,67 +32,69 @@ Node* insert(Node* root, int key)
 }
 
 
-void inorderPreSuc(Node* root, int key, int &pre, int &suc)
-{
-	if(root==NULL)
+void inorderPreSuc(Node* root, int key, Node* &pre, Node* &suc){
+
+	if(root==NULL){
 		return;
-	
-	if(root->data==key)
-	{
-		if(root->left!=NULL)
-		{
-			Node* temp=root->left;
-			while(temp->right!=NULL)
-			{
+	}
+
+	if(root->data == key){
+
+		if(root->left){
+			Node* temp = root->left;
+			while(temp->right){
 				temp=temp->right;
 			}
-			pre=temp->data;
+			pre=temp;
 		}
-		
-		if(root->right!=NULL)
-		{
-			Node* temp=root->right;
-			while(temp->left!=NULL)
-			{
+
+		if(root->right){
+			Node* temp = root->right;
+			while(temp->left){
 				temp=temp->left;
 			}
-			suc=temp->data;
+			suc=temp;
 		}
+
 		return;
 	}
-	
-	if(key<root->data)
-	{
-		suc=root->data;
-		inorderPreSuc(root->left,key,pre,suc);
+
+
+	if(key<root->data){
+		suc=root;
+		return inorderPreSuc(root->left, key, pre,suc);
 	}
-	else
-	{
-		pre=root->data;
-		inorderPreSuc(root->right,key,pre,suc);
+
+	else{
+		pre=root;
+		return inorderPreSuc(root->right, key, pre,suc);
 	}
-	
 }
 
 int main() 
 { 
     Node *root = NULL; 
     root = insert(root, 50);
-    root =  insert(root, 30); 
-    root =  insert(root, 20); 
-    root = insert(root, 40); 
-    root = insert(root, 70); 
-    root = insert(root, 60); 
-    root = insert(root, 80); 
-    root = insert(root, 10); 
-    root = insert(root, 5); 
-    root = insert(root, 62); 
-    root = insert(root, 79); 
-	int key = 40;
-	int pre=-1,suc=-1;
-	inorderPreSuc(root,key,pre,suc);
-	cout<<"Inorder Predecessor of "<<key<<" is:"<<pre<<endl;
-	cout<<"Inorder Successor of "<<key<<" is:"<<suc<<endl;
+    insert(root, 30);
+    insert(root, 20);
+    insert(root, 40);
+    insert(root, 70);
+    insert(root, 60);
+    insert(root, 80);
+	int key = 65;
+
+	Node* pre = NULL, *suc = NULL;
+ 
+    inorderPreSuc(root, key, pre, suc);
+    if (pre != NULL)
+      cout << "Predecessor is " << pre->data << endl;
+    else
+      cout << "No Predecessor";
+ 
+    if (suc != NULL)
+      cout << "Successor is " << suc->data;
+    else
+      cout << "No Successor";
    
     
     return 0; 
