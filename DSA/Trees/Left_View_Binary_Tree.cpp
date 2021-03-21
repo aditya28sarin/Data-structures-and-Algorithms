@@ -1,65 +1,64 @@
-//my method 
-// A wrapper over leftViewUtil()
-vector<int> leftView(Node *root)
-{
-    vector<int> vt;
-    queue <Node*> st;
-    st.push(root);    
-    int countNodes=0;
-    while(1)
-    {
-        int countNodes = st.size();
-        if (countNodes == 0) 
-            break; 
-        bool flag=true;
-        while(countNodes--)
-        {
-            Node* temp=st.front();
-            st.pop();
-            if(flag==true)
-            {
-                vt.push_back(temp->data);
-                flag=false;
-            }
-            if(temp->left)
-            {
-                st.push(temp->left);
-            }   
-            if(temp->right)
-            {
-                st.push(temp->right);
+#include<bits/stdc++.h> 
+using namespace std; 
+ 
+class Node 
+{ public:
+    int data; 
+    Node *left, *right; 
+}; 
+ 
+Node* newNode(int data) 
+{ 
+    Node *temp = new Node; 
+    temp->data = data; 
+    temp->left = temp->right = NULL; 
+    return temp; 
+} 
+
+
+vector<int> printLeftView(Node* root) {
+        
+        queue<Node*> q;
+        q.push(root);
+        vector<int> vt;
+        
+        if(root==NULL)
+        return vt;
+        
+        while(!q.empty()){
+            int n = q.size();
+            vt.push_back(q.front()->data);
+            while(n--){
+                Node* temp = q.front();
+                q.pop();
+
+                if(temp->left){
+                    q.push(temp->left);
+                }
+
+                if(temp->right){
+                    q.push(temp->right);
+                }
             }
         }
+        return vt;
     }
-    return vt;
-}
+ 
 
-
-//recursive soln 
-void leftViewUtil(node* root, int level, int* max_level) 
+int main() 
 { 
-    // Base Case 
-    if (root == NULL) 
-        return; 
-  
-    // If this is the first node of its level 
-    if (*max_level < level) { 
-        cout << root->data << "\t"; 
-        *max_level = level; 
+    Node* root = newNode(10); 
+    root->left = newNode(2); 
+    root->right = newNode(3); 
+    root->left->left = newNode(7); 
+    root->left->right = newNode(8); 
+    root->right->right = newNode(15); 
+    root->right->left = newNode(12); 
+    root->right->right->left = newNode(14); 
+ 
+    vector<int> ans = printLeftView(root);
+
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
     } 
-  
-    // Recur for left and right subtrees 
-    leftViewUtil(root->left, level + 1, max_level); 
-    leftViewUtil(root->right, level + 1, max_level); 
 } 
-  
-// A wrapper over leftViewUtil() 
-void leftView(node* root) 
-{ 
-    int max_level = 0; 
-    leftViewUtil(root, 1, &max_level); 
-} 
-
-
-
-//similar for right view, just write root->right before root->left
