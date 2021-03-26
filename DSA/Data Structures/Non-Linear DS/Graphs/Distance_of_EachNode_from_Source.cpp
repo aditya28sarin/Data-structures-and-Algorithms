@@ -82,7 +82,6 @@ int main()
 	g.addVertex(0,4);
 	g.addVertex(2,4);
 	g.addVertex(3,2);
-	g.addVertex(2,3);
 	g.addVertex(3,5);
     g.addVertex(3,4);
     

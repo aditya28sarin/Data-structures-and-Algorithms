@@ -41,51 +41,32 @@ public:
         queue<int> q;
 
         bool *visited = new bool[vertex+1]{0};
-        int *distance=new int[vertex+1]{0};
-        int *parent=new int[vertex+1];
-        
-
-        for(int i=0;i<vertex;i++)
-        {
-            parent[i]=-1;
-        }
+        int *parent = new int[vertex+1]{-1};
+        int *distance = new int[vertex+1]{0};
 
         q.push(start);
         visited[start]=true;
 
-        while(!q.empty())
-        {
+        while(!q.empty()){
             int temp = q.front();
-            cout<<temp<<" ";
             q.pop();
 
-            for(int neighbor: adjList[temp])
-            {
-                if(!visited[neighbor])
-                {
+            for(auto neighbor : adjList[temp]){
+                if(!visited[neighbor]){
                     q.push(neighbor);
                     visited[neighbor]=true;
-                    distance[neighbor]=distance[temp]+1;
                     parent[neighbor]=temp;
+                    distance[neighbor]=distance[temp]+1;
                 }
             }
-        }
-        cout<<endl<<endl;
+        } 
         
-        for(int i=0;i<vertex;i++)
-        {
-            cout<<i<<"node having" <<distance[i]<<endl;
-        }
+        cout<<"Shortest path from "<<start<<"to "<<end<<" is:"<<distance[end]<<endl;
 
-        cout<<"Shortest distance is "<<distance[end]<<endl;
-
-        cout<<"Shortest path is ";
-
-        int var=end;
-        while(var!=-1)
-        {
-            cout<<var<<"->";
-            var=parent[var];
+        int val = end;
+        while(val!=-1){
+            cout<<val<<"->";
+            val=parent[val];
         }
     }
 };
@@ -111,23 +92,3 @@ int main()
 
 
 
-
-
-
-
-
-
-
-
-
-
- addVertex( 0, 1);
-    addVertex( 0, 3);
-    addVertex( 1, 2);
-    addVertex( 3, 4);
-    addVertex(3, 7);
-    addVertex( 4, 5);
-    addVertex( 4, 6);
-    addVertex( 4, 7);
-    addVertex( 5, 6);
-    addVertex( 6, 7);
