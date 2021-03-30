@@ -1,54 +1,39 @@
-#include<bits/stdc++.h>
-using namespace std;
-#define ROW 5 
-#define COL 5
+// URL: https://leetcode.com/problems/number-of-islands/
 
-
-void countIslandsUtil(int M[][COL],int i, int j, bool visited[][COL]);
-int countIslands(int M[][COL], bool visited[][COL])
-{
-    int count=0;
-    for(int i=0;i<ROW;i++)
-    {
-        for(int j=0;j<COL;j++)
-        {
-            if(M[i][j]==1 && visited[i][j]==false)
-            {
-                countIslandsUtil(M,i,j,visited);
-                count++;
+class Solution {
+public:
+    
+    
+    void numIslandsUtil(vector<vector<char>>& grid, int x, int y){
+        
+        if(x<0 || y<0 || x>=grid.size() || y>=grid[0].size() || grid[x][y]!='1'){
+            return;
+        }
+        
+        grid[x][y]='2';
+        
+        numIslandsUtil(grid,x-1,y);
+        numIslandsUtil(grid,x,y-1);
+        numIslandsUtil(grid,x+1,y);
+        numIslandsUtil(grid,x,y+1);
+        
+    }
+    
+    int numIslands(vector<vector<char>>& grid) {
+        
+        int rows = grid.size();
+        int cols = grid[0].size();
+        int no_of_islands=0;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                
+                if(grid[i][j]=='1')
+                {
+                    numIslandsUtil(grid,i,j);
+                    no_of_islands++;   
+                }
             }
         }
-       
+        return no_of_islands;
     }
-    return count;
-}
-
-void countIslandsUtil(int M[][COL],int i, int j, bool visited[][COL])
-{
-    if(visited[i][j]==true || i<0 || j<0 || i>=ROW || j>=COL || M[i][j]==0)
-        return;
-
-    visited[i][j]=true;
-    countIslandsUtil(M,i-1,j,visited);
-    countIslandsUtil(M,i+1,j,visited);
-    countIslandsUtil(M,i,j-1,visited);
-    countIslandsUtil(M,i,j+1,visited);
-    countIslandsUtil(M,i-1,j-1,visited);
-    countIslandsUtil(M,i-1,j+1,visited);
-    countIslandsUtil(M,i+1,j-1,visited);
-    countIslandsUtil(M,i+1,j+1,visited);
-}
-
-int main() 
-{ 
-    bool visited[ROW][COL]{false};
-    int M[][COL] = { { 1, 1, 0, 0, 0 }, 
-                     { 0, 1, 0, 0, 1 }, 
-                     { 1, 0, 0, 1, 1 }, 
-                     { 0, 0, 0, 0, 0 }, 
-                     { 1, 0, 1, 0, 1 } }; 
-  
-    cout << "Number of islands is: " << countIslands(M,visited); 
-  
-    return 0; 
-} 
+};
