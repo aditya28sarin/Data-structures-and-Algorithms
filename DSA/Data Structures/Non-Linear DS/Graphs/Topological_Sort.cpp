@@ -2,7 +2,7 @@ class Solution {
 public:
     
     
-      bool detectCycle_util(vector<vector<int>>& adj,vector<int>& visited,int v)
+    bool detectCycle_util(vector<vector<int>>& adj,vector<int>& visited,int v)
     {
         if(visited[v]==1)
             return true;
