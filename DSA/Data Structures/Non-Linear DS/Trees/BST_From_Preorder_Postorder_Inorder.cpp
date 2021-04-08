@@ -17,41 +17,38 @@ Node* newNode(int data)
 }
 
 //Preorder -> O(n^2) solution
-Node* BSTFromPreUtil(int pre[], int *preIndex, int low, int high, int size){
-    if(*preIndex>=size || low > high){
-        return NULL;
-    }
-
-    Node* root = newNode(pre[*preIndex]);
-    *preIndex = *preIndex + 1;
-
-    if(low==high){
+class Solution {
+public:
+    
+    TreeNode* BSTUtil(TreeNode* &root, int element){
+        if(!root){
+            return root = new TreeNode(element);
+        }
+        
+        if(root->val > element){
+            root->left = BSTUtil(root->left, element);
+        }else{
+            root->right = BSTUtil(root->right, element);
+        }
+        
         return root;
     }
-
-    int i;
-    for(i=low;i<=high;i++){
-        if(pre[i]>root->data){
-            break;
+    
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        TreeNode* root = NULL;
+        
+        for(auto x:preorder){
+            BSTUtil(root,x);
         }
+        
+        return root;
     }
-
-    root->left = BSTFromPreUtil(pre,preIndex,*preIndex,i-1,size);
-
-    root->right = BSTFromPreUtil(pre,preIndex,i,high,size);
-
-    return root;
-}
-
-Node* BSTFromPre(int pre[], int size){
-
-    int preIndex = 0;
-    return BSTFromPreUtil(pre, &preIndex, 0, size-1, size);
-}
+};
 
 
 // Preorder -> O(n) solution
 Node* BSTFromPreOptimizedUtil(int pre[], int *preIndex, int key, int min, int max, int size){
+    
     if (*preIndex >= size)
         return NULL;
  
@@ -59,13 +56,13 @@ Node* BSTFromPreOptimizedUtil(int pre[], int *preIndex, int key, int min, int ma
 
 
     if(key>min && key<max){
-    root = newNode(key);
-    *preIndex =*preIndex + 1;
+        root = newNode(key);
+        *preIndex =*preIndex + 1;
 
-    if(*preIndex < size){
-        root->left = BSTFromPreOptimizedUtil(pre,preIndex, pre[*preIndex], min, key, size);
-        root->right = BSTFromPreOptimizedUtil(pre,preIndex, pre[*preIndex], key, max, size);
-    }
+        if(*preIndex < size){
+            root->left = BSTFromPreOptimizedUtil(pre,preIndex, pre[*preIndex], min, key, size);
+            root->right = BSTFromPreOptimizedUtil(pre,preIndex, pre[*preIndex], key, max, size);
+        }
     }
     return root;
 }
