@@ -1,100 +1,61 @@
-bool isCousins(Node *root, int a, int b)
-{
+// URL: https://leetcode.com/problems/cousins-in-binary-tree/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
     
-    if(root==NULL)
-        return false;
- 
-    queue <Node*> st;
- 
-    st.push(root);    
- 
-    int countNodes=0;
-    
-    while(!st.empty())
-    {
-        int countNodes = st.size();
-        
-        // if (countNodes == 0) 
-        //     break;
-        
-        bool aPresent=false;
-        bool bPresent=false;
-        
-        while(countNodes--)
-        {
-            Node* temp=st.front();
-            st.pop();
-           
-           if(temp->left && temp->right)
-           {
-               if(temp->left->data==a && temp->right->data==b)
-                return false;
-                
-               if(temp->left->data==b && temp->right->data==a)
-                return false;
-           }
-           
-           if(temp->data==a)
-            aPresent=true;
-            
-        
-           if(temp->data==b)
-            bPresent=true;    
-           
-            if(temp->left)
-            {
-                st.push(temp->left);
-            }   
-            
-            if(temp->right)
-            {
-                st.push(temp->right);
-            }
+    int findHeight(TreeNode* root, int value, int &parent, int height){
+        if(!root){
+            return 0;
         }
-      if(aPresent & bPresent)
-        return true;
+        
+        if(root->val == value){
+            return height;
+        }
+        
+        parent = root->val;
+        
+        int left = findHeight(root->left, value, parent, height+1);
+        
+        if(left){
+            return left;
+        }
+        
+        parent = root->val;
+        
+        int right = findHeight(root->right, value, parent, height+1);
+        
+        return right;
+        
     }
-    return false;
-}
 
-
-
-
-//recursive 
-int isSibling(struct Node *root, struct Node *a, struct Node *b) 
-{ 
-    // Base case 
-    if (root==NULL)  return 0; 
-  
-    return ((root->left==a && root->right==b)|| 
-            (root->left==b && root->right==a)|| 
-            isSibling(root->left, a, b)|| 
-            isSibling(root->right, a, b)); 
-} 
-  
-// Recursive function to find level of Node 'ptr' in a binary tree 
-int level(struct Node *root, struct Node *ptr, int lev) 
-{ 
-    // base cases 
-    if (root == NULL) return 0; 
-    if (root == ptr)  return lev; 
-  
-    // Return level if Node is present in left subtree 
-    int l = level(root->left, ptr, lev+1); 
-    if (l != 0)  return l; 
-  
-    // Else search in right subtree 
-    return level(root->right, ptr, lev+1); 
-} 
-  
-  
-// Returns 1 if a and b are cousins, otherwise 0 
-int isCousin(struct Node *root, struct Node *a, struct Node *b) 
-{ 
-    //1. The two Nodes should be on the same level in the binary tree. 
-    //2. The two Nodes should not be siblings (means that they should 
-    // not have the same parent Node). 
-    if ((level(root,a,1) == level(root,b,1)) && !(isSibling(root,a,b))) 
-        return 1; 
-    else return 0; 
-} 
+    bool isCousins(TreeNode* root, int x, int y) {
+        
+        if((root == NULL) || (root->val == x) || (root->val == y)){
+            return false;
+        }
+        TreeNode* curr = root;
+        
+        int xParent = -1;
+        
+        int xHeight = findHeight(curr, x, xParent, 0);
+        
+        int yParent = -1;
+        
+        int yHeight = findHeight(curr, y, yParent, 0);
+        
+        if((xHeight == yHeight) && (xParent != yParent)){
+            return true;
+        }
+        return false;
+    }
+};
