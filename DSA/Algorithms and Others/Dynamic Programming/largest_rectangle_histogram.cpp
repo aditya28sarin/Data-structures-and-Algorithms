@@ -52,3 +52,111 @@ public:
         return max_area;
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+
+
+    vector<int> findNSL(vector<int>& heights, int n){
+        vector<int> left;
+        stack<pair<int,int>> st;
+        int pseudoIndex=-1;
+        for(int i=0;i<n;i++){
+            if(st.size()==0){
+                left.push_back(pseudoIndex);
+            }
+            else if(st.size()>0 && st.top().first<heights[i]){
+                left.push_back(st.top().second);
+            }
+
+            while(!st.empty() && st.top().first>=heights[i]){
+                st.pop();
+            }
+
+            if(st.empty()){
+                left.push_back(pseudoIndex);
+            }else{
+                left.push_back(st.top().second);
+            }
+
+            st.push({heights[i],i})
+        }
+
+        return left;
+    }
+
+
+    
+    vector<int> findNSR(vector<int>& heights, int n){
+        vector<int> right;
+        stack<pair<int,int>> st;
+        int pseudoIndex=n;
+        for(int i=n-1;i>=0;i--){
+            if(st.size()==0){
+                right.push_back(pseudoIndex);
+            }
+            else if(st.size()>0 && st.top().first<heights[i]){
+                right.push_back(st.top().second);
+            }
+
+            while(!st.empty() && st.top().first>=heights[i]){
+                st.pop();
+            }
+
+            if(st.empty()){
+                right.push_back(pseudoIndex);
+            }else{
+                right.push_back(st.top().second);
+            }
+
+            st.push({heights[i],i})
+        }
+
+        return right;
+    }
+
+    int largestRectangleArea(vector<int>& heights) {
+    
+        int n = heights.size();
+
+        vector<int> left(n), right(n);
+
+        left = findNSL(heights,n);
+        right = findNSR(heights,n);
+
+        vector<int> area(n);
+
+        for(int i=0;i<n;i++){
+            area[i]=(right[i]-left[i]-1)*heights[i];
+        }
+
+        int max=INT_MIN;
+        for(int i=0;i<n;i++){
+            if(area[i]>max){
+                max=area[i];
+            }
+        }
+    return max;
+    }
+};
