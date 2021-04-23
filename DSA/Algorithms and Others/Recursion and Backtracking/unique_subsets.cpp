@@ -1,15 +1,22 @@
-// URL: https://leetcode.com/problems/subsets/
+// URL: https://leetcode.com/problems/subsets-ii/
+
 
 class Solution {
-public:
-    
+public: 
     vector<vector<int> >m;
+    set<vector<int>> st;
     
     void solve(vector<int>nums,vector<int>op)
     {
         if(nums.size()==0)
         {
-            m.push_back(op);
+            
+            if(st.find(op)==st.end())
+            {
+                st.insert(op);
+                m.push_back(op);
+            
+            }
             return;
         }
         vector<int>op1=op,op2=op;
@@ -18,10 +25,11 @@ public:
         solve(nums,op1);
         solve(nums,op2);
     }
-    vector<vector<int>> subsets(vector<int>& nums) {
+    
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         vector<int>op;
+        sort(nums.begin(),nums.end());
         solve(nums,op);
         return m;
-        
     }
 };
