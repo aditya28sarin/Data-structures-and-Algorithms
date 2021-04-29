@@ -20,3 +20,14 @@ public:
         return count;
     }
 };
+
+class Solution {
+public:
+    int findNumbers(vector<int>& nums) {
+        int even_count=0;
+        for(auto num: nums){
+            if(to_string(num).size()%2==0) even_count++;
+        }
+        return even_count;
+    }
+};
