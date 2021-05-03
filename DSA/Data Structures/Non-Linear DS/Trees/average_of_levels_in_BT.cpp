@@ -25,11 +25,8 @@ public:
                 }
                 sum+=x->val;
             }
-            
-            ans.push_back(sum*1.0/n);
-            
+            ans.push_back(sum*1.0/n);   
         }
-        
         return ans;
         
     }
