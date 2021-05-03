@@ -22,6 +22,3 @@ TreeNode* increasingBST(TreeNode* root) {
     return v[0];
 }
 };
-
-
-
