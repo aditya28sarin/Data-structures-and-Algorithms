@@ -3,55 +3,49 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-bool findMin(int set[], int n){
+int findMin(int set[], int n, int diff){
 
-    int sum=0;
+    int sum_of_arr=0;
 
     for(int i=0;i<n;i++)
-        sum+=set[i];
+        sum_of_arr+=set[i];
+
+    int sum=(diff+sum_of_arr)/2;
 
     int dp[n+1][sum+1];
-    for(int i=0;i<=n;i++)
-    {
-        for(int j=0;j<=sum;j++)
-        {
-            if(j==0)
-                dp[i][j]=1;
-            
-            if(i==0)
-                dp[i][j]=0;
 
+
+    for(int i=0;i<=n;i++)
+        dp[i][0]=1;
+    
+    for(int i=1;i<=sum;i++)
+        dp[0][i]=0;
+
+
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=sum;j++)
+        {
+            
             if (set[i-1]>j)
                 dp[i][j]=dp[i-1][j];
             
-            else if(set[i-1]<=j)
+            else
             {
                 dp[i][j]=dp[i-1][j] + dp[i-1][j-set[i-1]];
             }
         }
     }
 
-
-    //find the minimum difference value 
-    int diff=INT_MAX;
-    for(int i=0;i<=sum/2;i++)
-    {
-        int first=i;
-        int second = sum-i;
-
-        if(dp[n][i]==1 && diff>abs(first-second))
-            diff=abs(first-second);
-    }
-
-    return diff;
+    return dp[n][sum];
 }
 
 
 int main()
 {
-    int arr[] = {3, 1, 4, 2, 2, 1};
+    int arr[] =  {1,1,2,3};
+    int diff=1;
     int n = sizeof(arr)/sizeof(arr[0]);
-    cout << "The minimum difference between two sets is "
-         << findMin(arr, n);
+    cout <<findMin(arr, n, diff);
     return 0;
 }
