@@ -1,50 +1,47 @@
-// URL: https://www.geeksforgeeks.org/longest-common-substring-dp-29/
 
-#include <iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
-int main() {
-	//code
-	int tc;
-	cin>>tc;
-	while(tc--)
-	{
-	    int X,Y;
-	    cin>>X>>Y;
-	    cin.ignore();
-	    string s1,s2;
-	    getline(cin,s1);
-	    //cin.ignore();
-	    getline(cin,s2);
-	    
-	    int dp[X+1][Y+1];
-	    int lcs = 0;
-	    int x1,y1;
-	    for(int i=0;i<=X;++i)
-	        dp[i][0]=0;
-	    for(int i=0;i<=Y;++i)
-	        dp[0][i]=0;
-	    
-	    //Fill dp[][]
-	    for(int i=1;i<=X;++i)
-	    {
-	        for(int j=1;j<=Y;++j)
-	        {
-	            if(s1[i-1]==s2[j-1])
-	            {
-	                dp[i][j] = 1 + dp[i-1][j-1];
-	                if(lcs < dp[i][j])
-	                {
-	                    lcs = dp[i][j];
-	                    x1 = i;
-	                    y1 = j;
-	                }
-	            }
-	            else
-	                dp[i][j]=0;
-	        }
-	    }
-	   cout<<lcs<<"\n";
+//tabular method 
+int LCSTab(string s1,string s2, int n, int m, int dp[][8]){
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=m;j++){
+            
+            if(i==0 || j==0){
+                dp[i][j]=0;
+            }
+        }
+    }
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            
+            if(s1[i-1]==s2[j-1]){
+                dp[i][j]=1+dp[i-1][j-1];
+            }
+
+            else{
+                dp[i][j]=0;
+            }
+        }
+    }
+	int max=INT_MIN;
+	for(int i=0;i<=m;i++){
+		for(int j=0;j<=n;j++){
+			if(dp[i][j]>max)
+				max=dp[i][j];
+		}
 	}
-	return 0;
+    return max;
+}
+
+int main(){
+    string s1="abcdegh";
+    string s2="abedfhr";
+	
+    int n = s1.length();
+    int m = s2.length();
+    int dp[8][8];
+    cout<<LCSTab(s1,s2,n,m,dp);
+
 }
