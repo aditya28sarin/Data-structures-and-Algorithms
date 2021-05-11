@@ -1,42 +1,168 @@
-// URL: https://leetcode.com/problems/shortest-common-supersequence/
+// URL: https://leetcode.com/problems/longest-common-subsequence/
 
-class Solution {
-    string findLCS(string str1,string str2)
-    {
-        int len1 = str1.size();
-        int len2 = str2.size();
-        string dp[len1+1][len2+1];
-        
-        for(int i=0;i<=len1;++i)
-            for(int j=0;j<=len2;++j)
-            {
-                if(i==0 || j==0)
-                    dp[i][j] = "";
-                else if(str1[i-1]==str2[j-1])
-                    dp[i][j] = dp[i-1][j-1]+str1[i-1];
-                else
-                    dp[i][j] = dp[i][j-1].size() > dp[i-1][j].size() ? dp[i][j-1]:dp[i-1][j];
-            }
-        return dp[len1][len2];
+#include<bits/stdc++.h>
+using namespace std;
+
+
+//recursive solution
+int LCS(string s1,string s2, int n, int m){
+    if(n==0 || m==0){
+        return 0;
     }
-public:
-    string shortestCommonSupersequence(string str1, string str2) {
-        string ans = "";
-        string lcs = findLCS(str1,str2);
-        
-        int p1=0,p2=0;
-        for(char c: lcs)
-        {
-            while(str1[p1]!=c)  
-                ans += str1[p1++];
-            while(str2[p2]!=c)  
-                ans += str2[p2++];
+
+    if(s1[n-1]==s2[m-1]){
+        return 1+LCS(s1,s2,n-1,m-1);
+    }
+
+    else{
+        return max(LCS(s1,s2,n,m-1), LCS(s1,s2,n-1,m));
+    }
+}
+
+
+//memoized version
+int t[1001][1001];
+int LCSMem(string s1,string s2, int n, int m){
+    if(n==0 || m==0){
+        return 0;
+    }
+
+    if(t[m][n]!=-1){
+        return t[m][n];
+    }
+
+    if(s1[n-1]==s2[m-1]){
+        return  t[m][n] = 1+LCS(s1,s2,n-1,m-1);
+    }
+
+    else{
+        return  t[m][n] =  max(LCS(s1,s2,n,m-1), LCS(s1,s2,n-1,m));
+    }
+
+    return t[m][n];
+}
+
+//tabular method 
+int LCSTab(string s1,string s2, int n, int m, int dp[][8]){
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=m;j++){
             
-            ans += c;   
-            ++p1;
-            ++p2;
+            if(i==0 || j==0){
+                dp[i][j]=0;
+            }
         }
-        ans += str1.substr(p1) + str2.substr(p2);
-        return ans;
     }
-};
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            
+            if(s1[i-1]==s2[j-1]){
+                dp[i][j]=1+dp[i-1][j-1];
+            }
+
+            else{
+                dp[i][j]=max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    return dp[n][m];
+}
+
+
+string LCSTabPrint(string s1, string s2, int dp[8][8], int n, int m){
+    int i=n;
+    int j=m;
+    string ans;
+    while(i>0 && j>0){
+        if(s1[i-1]==s2[j-1]){
+            ans.push_back(s1[i-1]);
+            i--;
+            j--;
+        }
+        else{
+            if(dp[i-1][j]<dp[i][j-1])
+                j--;
+            else
+                i--;
+        }
+    }
+
+    return ans;
+}
+
+string SCSTabPrint(string s1, string s2, int dp[8][8], int n, int m){
+    int i=n;
+    int j=m;
+    string ans;
+    while(i>0 && j>0){
+        if(s1[i-1]==s2[j-1]){
+            ans.push_back(s1[i-1]);
+            i--;
+            j--;
+        }
+        else{
+            if(dp[i-1][j]<dp[i][j-1]){
+                ans.push_back(s2[j-1]);
+                j--;
+            }
+                
+            else{
+                ans.push_back(s1[i-1]);
+                i--;
+            }
+               
+        }
+    }
+
+    while(i>0) 
+    {
+        ans.push_back(s1[i-1]);
+        i--;
+    }
+ 
+    while(j>0)
+    {
+        ans.push_back(s2[j-1]);
+        j--;
+    }
+    
+    reverse(ans.begin(),ans.end());
+    
+    return ans;   
+}
+
+
+int main(){
+    string s1="abcdegh";
+    string s2="abedfhr";
+
+    cout<<LCS(s1,s2,s2.length(),s2.length())<<endl;
+
+    memset(t,-1,sizeof(t));
+    cout<<LCSMem(s1,s2,s1.length(),s2.length())<<endl;
+
+    int n = s1.length();
+    int m = s2.length();
+    int dp[8][8];
+    int LCSLength = LCSTab(s1,s2,n,m,dp);
+    cout<<LCSLength<<endl;
+
+    string ans;
+
+    ans = LCSTabPrint(s1,s2,dp,n,m);
+    reverse(ans.begin(),ans.end());
+    for(int i=0;i<ans.length();i++){
+        cout<<ans[i];
+    }
+
+    cout<<endl;
+
+
+    cout<<"Length of Shortest Common Super Sequence: "<<m+n-LCSLength<<endl;
+
+    string ans2;
+    ans2=SCSTabPrint(s1,s2,dp,n,m);
+    for(int i=0;i<ans2.length();i++){
+        cout<<ans2[i];
+    }
+}
