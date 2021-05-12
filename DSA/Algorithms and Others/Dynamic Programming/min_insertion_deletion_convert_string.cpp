@@ -8,7 +8,7 @@ using namespace std;
 
 
 //tabular method 
-int LPSTab(string s1,string s2, int n, int m, int dp[][8]){
+int LCSTab(string s1,string s2, int n, int m, int dp[][8]){
     for(int i=0;i<=n;i++){
         for(int j=0;j<=m;j++){
             
@@ -35,15 +35,16 @@ int LPSTab(string s1,string s2, int n, int m, int dp[][8]){
 
 
 int main(){
-    string s1="agbcba";
-    string s2=s1;
-    reverse(s2.begin(),s2.end());
+    string s1="heap";
+    string s2="pea";
 
+   
     int n = s1.length();
     int m = s2.length();
     int dp[8][8];
-    int LPSLen = LPSTab(s1,s2,n,m,dp);
+    int LCSLen = LCSTab(s1,s2,n,m,dp);
 
-    cout<<LPSLen<<endl;
+    cout<<"No. of Deletions are: "<<n-LCSLen<<endl;
+    cout<<"No. of Insertions are: "<<m-LCSLen<<endl;
 
 }

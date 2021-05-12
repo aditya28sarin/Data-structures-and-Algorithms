@@ -1,5 +1,7 @@
 
 
+
+
 // URL: https://leetcode.com/problems/longest-common-subsequence/
 
 #include<bits/stdc++.h>
@@ -44,6 +46,6 @@ int main(){
     int dp[8][8];
     int LPSLen = LPSTab(s1,s2,n,m,dp);
 
-    cout<<LPSLen<<endl;
+    cout<<"Minimum no. of deletions: "<<n-LPSLen<<endl;
 
 }
