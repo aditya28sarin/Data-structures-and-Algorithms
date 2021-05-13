@@ -1,38 +1,25 @@
-// URL: https://practice.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1
 
 #include<bits/stdc++.h>
 using namespace std;
 
-int MatrixChainOrder(int p[], int n){
+int MCM(int arr[], int i, int j){
+    
+    if(i>=j){
+        return 0;
+    }
 
-    int m[n][n]; 
-  
-    int i, j, k, L, q; 
+    int mn = INT_MAX;
+    for(int k=i;k<=j-1;k++){
+        int temp = MCM(arr,i,k) + MCM(arr,k+1,j) + (arr[i-1]*arr[k]*arr[j]);
 
-    // one matrix. 
-    for (i = 1; i < n; i++) 
-        m[i][i] = 0; 
-  
-    // L is chain length. 
-    for (L = 2; L <= n-1; L++)  
-    { 
-        for (i = 1; i <= n - L; i++)  
-        { 
-            j = i + L - 1; 
-            m[i][j] = INT_MAX; 
-            for (k = i; k <= j - 1; k++)  
-            { 
-                q = m[i][k] + m[k + 1][j] 
-                    + p[i - 1] * p[k] * p[j]; 
-                if (q < m[i][j]) 
-                    m[i][j] = q; 
-            } 
-        } 
-    } 
-  
-    return m[1][n - 1]; 
+        if(temp < mn){
+            mn=temp;
+        }
+    }
 
+    return mn;
 }
+
 
 
 int main() 
@@ -41,5 +28,5 @@ int main()
     int n = sizeof(arr) / sizeof(arr[0]); 
   
     cout << "Minimum number of multiplications is "
-         << MatrixChainOrder(arr, n); 
+         << MCM(arr, 1,n-1); 
 } 
