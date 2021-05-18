@@ -23,7 +23,8 @@ public:
             s+=to_string(x);
             carry=sum/2;
         }
-        s =(carry==0)? s: s+='1';
+    
+        s=(carry==0)? s: s+='1';
         reverse(s.begin(),s.end());
         return s;
     }
