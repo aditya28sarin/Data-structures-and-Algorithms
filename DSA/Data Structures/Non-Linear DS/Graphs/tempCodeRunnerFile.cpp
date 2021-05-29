@@ -1,1 +1,1 @@
-        g.addEdge(0, 3); 
+addEdge(adjList,10,5);
