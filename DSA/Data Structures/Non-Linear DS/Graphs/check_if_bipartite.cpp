@@ -91,7 +91,6 @@ bool isBipartite(vector<int> adjList[], int V){
 
 
 //with dfs
-
 bool isBipartiteDFSUtil(vector<int> adjList[], int node, int color[]){
     
     if(color[node]==-1) color[node]=1;
