@@ -1,68 +1,54 @@
-vector <int> zigZagTraversal(Node* root)
-{
-	vector<int> vt;
-	
-	queue<Node*> q;
-	
-	stack<Node*> st;
-	
-    q.push(root);
-  
-    int level=0;
-    
-    while(1)
-    {
-        int cN=q.size();
-        
-        if(cN==0)
-            break;
-            
-        while(cN--)
-        {
-         
-            if(level%2==0)
-            {
-                Node* temp=q.front();
-                q.pop();
-                vt.push_back(temp->data);
-
-                  
-                if(temp->left)
-                {
-                    st.push(temp->left);
-                    q.push(temp->left);
-                }
-                if(temp->right)
-                {
-                    st.push(temp->right);
-                    q.push(temp->right);
-                } 
-            }  
-            
-            if(level%2!=0)
-            {
-                Node* temp=q.front();
-                q.pop();
-                Node* t1=st.top();
-                st.pop();
-                vt.push_back(t1->data);
-               
-               if(temp->left)
-                {
-                    
-                    q.push(temp->left);
-                }
-                
-                  if(temp->right)
-                  {
-                      
-                        q.push(temp->right);
-                  }
-                
-            }
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> vec;
+        if(root==NULL){
+            return vec;
         }
-        
-        level++;
+        int level = 1;
+        deque<TreeNode*> q;
+        q.push_front(root);
+        while(!q.empty()){
+            int size = q.size();
+            vector<int> ans;
+            while(size--){
+                if(level%2!=0){
+                    TreeNode* p = q.front();
+                    q.pop_front();
+                    ans.push_back(p->val);
+                    if(p->left){
+                        q.push_back(p->left);
+                    }
+                    if(p->right){
+                        q.push_back(p->right);
+                    }
+                }
+                else{
+                    TreeNode * p = q.back();
+                    q.pop_back();
+                    ans.push_back(p->val);
+                    if(p->right){
+                        q.push_front(p->right);
+                    }
+                    if(p->left){
+                        q.push_front(p->left);
+                    }
+                }
+            }
+            vec.push_back(ans);
+            level++;
+        }
+        return vec;
     }
-    return vt;
-}
+};
