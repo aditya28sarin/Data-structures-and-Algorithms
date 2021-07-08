@@ -3,70 +3,40 @@
 #include<bits/stdc++.h> 
 using namespace std; 
 
-// using std::stack for 
-// stack implementation 
-stack<int> st; 
 
-// intializing a string to store 
-// result of reversed stack 
-string ns; 
+void reverseUtil(stack<int>& st, int temp){
 
-// Below is a recursive function 
-// that inserts an element 
-// at the bottom of a stack. 
-int insert_at_bottom(int x) 
-{
-	if(st.size() == 0) 
-	st.push(x); 
+	if(st.size()==0){
+		st.push(temp);
+		return;
+	}
 
-	else
-	{ 	
-		// All items are held in Function Call 
-		// Stack until we reach end of the stack 
-		// When the stack becomes empty, the 
-		// st.size() becomes 0, the above if 
-		// part is executed and the item is 
-		// inserted at the bottom 
-			
-		int a = st.top(); 
-		st.pop(); 
-		insert_at_bottom(x); 
 
-		// push allthe items held in 
-		// Function Call Stack 
-		// once the item is inserted 
-		// at the bottom 
-		st.push(a); 
-	} 
-} 
+	int t=st.top();
+	st.pop();
 
-// Below is the function that 
-// reverses the given stack using 
-// insert_at_bottom() 
-int reverse() 
-{ 
-	if(st.size()<=0) 
-		return 0;
-		
-		// Hold all items in Function 
-		// Call Stack until we 
-		// reach end of the stack 
-		int x = st.top(); 
-		st.pop(); 
-		reverse(); 
-		
-		// Insert all the items held 
-		// in Function Call Stack 
-		// one by one from the bottom 
-		// to top. Every item is 
-		// inserted at the bottom 
-		insert_at_bottom(x); 
-} 
+	reverseUtil(st,temp);
+
+	st.push(t);
+}
+
+void reverse(stack<int>& st){
+	if(st.size()==1){
+		return;
+	}
+
+	int temp = st.top();
+	st.pop();
+
+	reverse(st);
+
+	reverseUtil(st,temp);
+}
 
 // Driver Code 
 int main() 
 { 
-	
+	stack<int> st;
 	// push elements into 
 	// the stack 
 	st.push(41); 
@@ -78,20 +48,17 @@ int main()
 	
 	// function to reverse 
 	// the stack 
-	reverse(); 
+	reverse(st); 
 	cout<<"Reversed Stack"
 		<<endl; 
+
+	while(!st.empty()){
+		cout<<st.top()<<" ";
+		st.pop();
+	}
 	
-	// storing values of reversed 
-	// stack into a string for display 
-	while(!st.empty()) 
-	{ 
-		int p=st.top(); 
-		st.pop(); 
-		cout<<p<<" ";
-	} 
+	
 	
 	
 } 
 
-// This code is contributed by Gautam Singh 
