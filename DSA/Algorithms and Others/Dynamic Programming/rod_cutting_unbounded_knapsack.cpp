@@ -33,7 +33,7 @@ int main()
     int price[]={1,5,8,9,10,17,17,20};
     int L=8; 
     int size = sizeof(len)/sizeof(len[0]); 
-    cout<<"Maximum Obtainable Value is: "<<cutRod(len,price,size,L)); 
+    cout<<"Maximum Obtainable Value is: "<<cutRod(len,price,size,L); 
 
     return 0; 
 }

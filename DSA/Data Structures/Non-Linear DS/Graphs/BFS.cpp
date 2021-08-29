@@ -115,10 +115,6 @@ using namespace std;
 // }
 
 
-
-#include<bits/stdc++.h>
-using namespace std;
-
 // class Graph{
 //     int V;
 //     list<int> *adj;
@@ -258,7 +254,7 @@ void bfs(vector<int> adjList[], int V){
         }
     }
 
-      for(int i=0;i<V;i++){
+    for(int i=0;i<V;i++){
         cout<<bfs[i]<<" ";
     }
 }
@@ -285,5 +281,5 @@ int main(){
 
     bfs(adjList,V);
 
-  
+    
 }

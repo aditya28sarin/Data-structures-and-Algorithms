@@ -1,4 +1,4 @@
-// URL: https://www.geeksforgeeks.org/longest-repeating-subsequence/
+ // URL: https://www.geeksforgeeks.org/longest-repeating-subsequence/
 
 #include<bits/stdc++.h>
 using namespace std;

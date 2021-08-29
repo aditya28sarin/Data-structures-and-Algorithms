@@ -90,8 +90,8 @@ int knapsackTab(vector<int>& wt, vector<int>& val, int W, int n){
 int main()
  {
     vector<int> weights = {1,3,4,5};
-    vector<int> val = {1,4,5,7};
-    int W = 7;
+        vector<int> val = {1,4,5,7};
+        int W = 7;
     int n = weights.size();
     cout<<knapsack(weights,val,W, n)<<endl;
 

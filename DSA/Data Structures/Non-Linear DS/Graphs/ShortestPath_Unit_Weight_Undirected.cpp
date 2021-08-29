@@ -91,10 +91,39 @@ using namespace std;
 // }
 
 
+// void addEdge(vector<int> adjList[], int u, int v){
+// 	adjList[u].push_back(v);
+// 	adjList[v].push_back(u);
+// }
+
+// void shortestPath(vector<int> adjList[], int V, int src){
+// 	vector<int> dist(V+1,INT_MAX);
+// 	queue<int> q;
+
+// 	q.push(src);
+// 	dist[src]=0;
+// 	while(!q.empty()){
+// 		int x = q.front();
+// 		q.pop();
+
+// 		for(auto it : adjList[x]){
+// 			if(dist[x]+1<dist[it]){
+// 				dist[it]=dist[x]+1;
+// 				q.push(it);
+// 			}
+// 		}
+// 	}
+
+// 	for(int i=0;i<V;i++) cout<<dist[i]<<" ";
+// }
+
+
+
 void addEdge(vector<int> adjList[], int u, int v){
 	adjList[u].push_back(v);
 	adjList[v].push_back(u);
 }
+
 
 void shortestPath(vector<int> adjList[], int V, int src){
 	vector<int> dist(V+1,INT_MAX);
@@ -102,19 +131,22 @@ void shortestPath(vector<int> adjList[], int V, int src){
 
 	q.push(src);
 	dist[src]=0;
+
 	while(!q.empty()){
-		int x = q.front();
+		int n=q.front();
 		q.pop();
 
-		for(auto it : adjList[x]){
-			if(dist[x]+1<dist[it]){
-				dist[it]=dist[x]+1;
+		for(auto it:adjList[n]){
+			if(dist[it]>dist[n]+1){
+				dist[it]=dist[n]+1;
 				q.push(it);
 			}
 		}
 	}
 
-	for(int i=0;i<V;i++) cout<<dist[i]<<" ";
+	for(int i=0;i<V;i++){
+		cout<<dist[i]<<" ";
+	}
 }
 
 int main(){

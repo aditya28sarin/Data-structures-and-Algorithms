@@ -95,6 +95,7 @@ void findMST( vector<pair<int,int>> adjList[], int V){
     for(int count=0;count<V-1;count++){
         int min_key = INT_MAX, u;
 
+        //figure out which is the minimum key value
         for(int v = 0; v<V; v++){
             if(mst[v]==false && key[v]< min_key){
                 min_key=key[v];
@@ -102,9 +103,11 @@ void findMST( vector<pair<int,int>> adjList[], int V){
             }
         }
 
+        //once we find out the minimum in key array we save it's index 
+        //we then mark that 
         mst[u]=true;
 
-
+        //now we iterate for it's adjacent nodes 
         for(auto it : adjList[u]){
             int v = it.first;
             int wt = it.second;
@@ -120,6 +123,8 @@ void findMST( vector<pair<int,int>> adjList[], int V){
         cout<<parent[i]<<"-"<<i<<"\n";
     }
 }
+
+
 
 int main(){
     int V = 5;
