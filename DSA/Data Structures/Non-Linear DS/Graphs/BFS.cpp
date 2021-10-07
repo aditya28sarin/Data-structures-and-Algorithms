@@ -229,35 +229,76 @@ using namespace std;
 // }
 
 
-void bfs(vector<int> adjList[], int V){
-    vector<int> bfs;
-    vector<int> visited(V+1,0);
+// void bfs(vector<int> adjList[], int V){
+//     vector<int> bfs;
+//     vector<int> visited(V+1,0);
 
-    for(int i=1;i<=V;i++){
-        if(!visited[i]){
+//     for(int i=1;i<=V;i++){
+//         if(!visited[i]){
 
-            queue<int> q;
-            q.push(i);
-            visited[i]=1;
-            while(!q.empty()){
-                int x = q.front();
-                q.pop();
-                bfs.push_back(x);
+//             queue<int> q;
+//             q.push(i);
+//             visited[i]=1;
+//             while(!q.empty()){
+//                 int x = q.front();
+//                 q.pop();
+//                 bfs.push_back(x);
 
-               for(auto it: adjList[x]){
-                   if(!visited[it]){
-                       q.push(it);
-                       visited[it]=1;
-                   }
-               }
+//                for(auto it: adjList[x]){
+//                    if(!visited[it]){
+//                        q.push(it);
+//                        visited[it]=1;
+//                    }
+//                }
+//             }
+//         }
+//     }
+
+//     for(int i=0;i<V;i++){
+//         cout<<bfs[i]<<" ";
+//     }
+// }
+
+
+
+void bfsUtil(vector<int> adj[], vector<int>& visited, vector<int>& bfs, int curr, int V){
+
+    visited[curr]=1;
+    queue<int> q;
+    q.push(curr);
+
+    while(!q.empty()){
+        int temp=q.front();
+        q.pop();
+
+        bfs.push_back(temp);
+
+        for(auto el : adj[temp]){
+            if(!visited[el]){
+                visited[el]=1;
+                q.push(el);
             }
         }
     }
+
 
     for(int i=0;i<V;i++){
         cout<<bfs[i]<<" ";
     }
 }
+
+void bfs(vector<int> adj[], int V){
+    
+    vector<int> visited(V+1,0);
+    vector<int> bfs;
+
+    for(int i=1;i<V;i++){
+        if(!visited[i]){
+            bfsUtil(adj,visited,bfs,i,V);
+        }
+    }
+}
+
 
 
 void addEdge(vector<int> adj[], int u, int v){

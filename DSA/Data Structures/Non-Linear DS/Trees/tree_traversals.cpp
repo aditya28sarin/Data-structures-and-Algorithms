@@ -27,7 +27,7 @@ void printPreorder(Node* root){
     
 }
 
-//print inorder
+// inorder
 void printInorder(Node* root){
     if(root==NULL)
         return;
@@ -98,7 +98,7 @@ void iterativeInorder(Node* root){
 }
 
 
-//iterative postorder with 1 stack 
+//iterative postorder with 2 stack 
 // So, we can do something like iterative preorder traversal with the following differences:
 // a) Instead of printing an item, we push it to a stack.
 // b) We push the left subtree before the right subtree.
