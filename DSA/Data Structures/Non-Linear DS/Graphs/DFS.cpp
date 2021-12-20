@@ -74,8 +74,6 @@ void dfs(vector<int> adjList[], vector<int>& visited, vector<int>& ans, int V){
 }
 
 
-
-
 int main(){
     int V = 7;
     vector<int> adjList[V+1];

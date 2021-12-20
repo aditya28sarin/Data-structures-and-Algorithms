@@ -161,40 +161,7 @@ bool isCycleBFS(vector<int> adjList[], int V){
     return false;
 }
 
-bool isCycleBFSUtil(vector<int> adjList[], vector<int>& visited, int V, int curr){
-    visited[curr]=1;
-    queue<pair<int,int>> q;
 
-    q.push({curr,-1});
-
-    while(!q.empty()){
-        int node=q.front().first;
-        int parent=q.front().second;
-
-        for(auto el:adjList[node]){
-            if(!visited[node]){
-                visited[node]=1;
-                q.push({el,node});
-            }else{
-                if(parent!=el)
-                    return true;
-            }
-        }
-    }
-
-    return false;
-}
-
-bool isCycleBFS(vector<int> adjList[], int V){
-    vector<int> visited(V+1,0);
-
-    for(int i=1;i<=V;i++){
-        if(!visited[i]){
-            if(isCycleBFSUtil(adjList,visited,V,i))
-                return true;
-        }
-    }
-}
 
 
 //detect cycle undirected with DFS
@@ -225,6 +192,8 @@ bool isCycleDFS(vector<int> adjList[], int V){
     }
     return false;
 }
+
+
 
 int main(){
     int V = 11;

@@ -125,6 +125,28 @@ void findMST( vector<pair<int,int>> adjList[], int V){
 }
 
 
+void findMST(vector<pair<int,int>> adjList[], int V){
+    vector<int> key(V,INT_MAX);
+    vector<bool> MST (V,false);
+    vector<int> parent(V,-1);
+
+    key[0]=0;
+    parent[0]=-1;
+
+    for(int i=0;i<V-1;i++){
+        int minKey=INT_MAX;
+        int idx;
+
+
+        for(int i=0;i<V;i++){
+            if(MST[i]==false && key[i]<minKey){
+                minKey=key[i];
+                idx=i;
+            }
+        }
+    }
+}
+
 
 int main(){
     int V = 5;

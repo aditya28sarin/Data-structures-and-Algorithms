@@ -114,6 +114,38 @@ bool isCycle(vector<int> adjList[], int V){
     return false;
 }
 
+bool isCycleUtil(vector<int> adjList[], vector<int>& visited, vector<int>& dfsVisited, int curr){
+    visited[curr]=1;
+    dfsVisited[curr]=1;
+
+    for(auto it:adjList[curr]){
+        if(!visited[it]){
+            if(isCycleUtil(adjList,visited,dfsVisited,it)){
+                return true;
+            }
+        }else if(dfsVisited[it]){
+            return true;
+        }
+    }
+
+    dfsVisited[curr]=0;
+    return false;
+}
+
+bool isCycle(vector<int> adjList[], int V){
+    vector<int> visited(V+1,0);
+    vector<int> dfsVisited(V+1,0);
+
+    for(int i=1;i<V;i++){
+        if(!visited[i]){
+            if(isCycleUtil(adjList,visited, dfsVisited, i)){
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
 
 
 // BFS

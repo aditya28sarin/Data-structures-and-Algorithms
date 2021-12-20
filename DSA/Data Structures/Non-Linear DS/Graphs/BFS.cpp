@@ -301,6 +301,38 @@ void bfs(vector<int> adj[], int V){
 
 
 
+void bfsUtil(vector<int> adjList[], vector<int>& visited, vector<int>& ans, int V, int curr){
+    visited[curr]=1;
+
+    queue<int> q;
+    q.push(curr);
+
+    while(!q.empty()){
+        int temp = q.front();
+        q.pop();
+        ans.push_back(temp);
+
+        for(auto it:adjList[curr]){
+            if(!visited[it]){
+                visited[it]=1;
+                q.push(it);
+            }
+        }
+    }
+}
+
+void bfs(vector<int> adjList[], int V){
+    vector<int> visited(V+1,0);
+    vector<int> ans;
+
+    for(int i=1;i<=V;i++){
+        if(!visited[i]){
+            bfsUtil(adjList, visited, ans, V, i);
+        }
+    }
+}
+
+
 void addEdge(vector<int> adj[], int u, int v){
     adj[u].push_back(v);
     adj[v].push_back(u);

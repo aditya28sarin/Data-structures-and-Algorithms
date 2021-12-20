@@ -129,6 +129,40 @@ vector<int> findTopoBFS(vector<int> adjList[], int V){
     return ans;
 }
 
+vector<int> findTopoBFS(vector<int> adjList[], int V){
+    vector<int> ans;
+    vector<int> indeg(V,0);
+    queue<int> q;
+
+    for(int i=0;i<=V;i++){
+        for(auto it: adjList[i]){
+            indeg[it]++;
+        }
+    }
+
+    for(int i=0;i<=V;i++){
+        if(indeg[i]==0){
+            q.push(i);
+        }
+    }
+
+    while(!q.empty()){
+        int curr=q.front();
+        q.pop();
+        ans.push_back(curr);
+
+        for(auto it: adjList[curr]){
+            indeg[it]--;
+            if(indeg[it]==0){
+                q.push(it);
+            }
+        }
+    }
+
+    return ans;
+}
+
+
 
 int main(){
     int V = 6;

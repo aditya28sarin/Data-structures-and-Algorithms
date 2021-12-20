@@ -149,6 +149,27 @@ void shortestPath(vector<int> adjList[], int V, int src){
 	}
 }
 
+vois shortestPath(vector<int> adjList[], int V, int src){
+	vector<int> distance (V+1,INT_MAX);
+	queue<int> q;
+
+	distance[src]=0;
+	q.push(src);
+
+	while(!q.empty()){
+		int curr=q.front();
+		q.pop();
+
+
+		for(auto it:adjList[curr]){
+			if(distance[it]>distance[curr]+1){
+				distance[it]=distance[curr]+1;
+				q.push(it);
+			}
+		}
+	}
+}
+
 int main(){
 	int V = 9;
 	vector<int> adjList[V+1];

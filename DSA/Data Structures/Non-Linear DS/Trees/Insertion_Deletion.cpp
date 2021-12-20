@@ -146,7 +146,6 @@ Node* deletion(Node* root, int val){
 }
 
 
-
 int main(){
     Node* root = createNode(10);
     root->left = createNode(11);
